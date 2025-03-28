@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "check": "biome check --write",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.17",
