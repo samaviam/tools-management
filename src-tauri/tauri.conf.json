@@ -9,12 +9,20 @@
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../dist"
   },
+  "plugins": {
+    "sql": {
+      "preload": ["sqlite:app.db"]
+    }
+  },
   "app": {
     "windows": [
       {
-        "title": "tools-management",
-        "width": 800,
-        "height": 600
+        "label": "main",
+        "title": "Tools Management",
+        "minWidth": 1200,
+        "minHeight": 730,
+        "width": 1200,
+        "height": 730
       }
     ],
     "security": {
