@@ -1,7 +1,14 @@
-import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import type { Auth } from '@/hooks/use-auth';
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
-export const Route = createRootRoute({
+interface RouterContext {
+  auth: Auth;
+}
+
+const isDevelopmentEnv = process.env.NODE_ENV === 'development';
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
 });
 
@@ -10,7 +17,7 @@ function RootComponent() {
     <>
       <Outlet />
 
-      <TanStackRouterDevtools />
+      {isDevelopmentEnv ? <TanStackRouterDevtools /> : null}
     </>
   );
 }

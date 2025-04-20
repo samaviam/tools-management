@@ -1,10 +1,14 @@
-import RouterWithContextProvider from "./router-with-context-provider";
+import SearchProvider from './search-provider';
+import SidebarProvider from './sidebar-provider';
+import ThemeProvider from './theme-provider';
 
-const Providers = () => {
+const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <RouterWithContextProvider />
-    </>
+    <ThemeProvider>
+      <SearchProvider>
+        <SidebarProvider>{children}</SidebarProvider>
+      </SearchProvider>
+    </ThemeProvider>
   );
 };
 
