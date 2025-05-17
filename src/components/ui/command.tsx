@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
 import { SearchIcon } from 'lucide-react';
 
@@ -10,13 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { forwardRef } from 'react';
 
-function Command({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+const Command = forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<typeof CommandPrimitive>
+>(({ className, ...props }, ref) => {
   return (
     <CommandPrimitive
+      ref={ref}
       data-slot="command"
       className={cn(
         'bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md',
@@ -25,7 +26,7 @@ function Command({
       {...props}
     />
   );
-}
+});
 
 function CommandDialog({
   title = 'Command Palette',
@@ -51,12 +52,13 @@ function CommandDialog({
   );
 }
 
-function CommandInput({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+const CommandInput = forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<typeof CommandPrimitive.Input>
+>(({ className, ...props }, ref) => {
   return (
     <div
+      ref={ref}
       data-slot="command-input-wrapper"
       className="flex h-9 items-center gap-2 border-b px-3"
     >
@@ -71,7 +73,7 @@ function CommandInput({
       />
     </div>
   );
-}
+});
 
 function CommandList({
   className,
