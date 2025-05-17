@@ -1,26 +1,14 @@
 import {
-  IconBarrierBlock,
-  IconBrowserCheck,
-  IconBug,
-  IconChecklist,
-  IconError404,
-  IconHelp,
+  IconChalkboard,
   IconLayoutDashboard,
-  IconLock,
-  IconLockAccess,
-  IconMessages,
-  IconNotification,
-  IconPackages,
-  IconPalette,
-  IconServerOff,
+  IconMicroscope,
+  IconSchool,
   IconSettings,
   IconTool,
-  IconUserCog,
-  IconUserOff,
-  IconUsers,
+  IconUsersGroup,
 } from '@tabler/icons-react';
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react';
-import { type SidebarData } from '../types';
+import type { SidebarData } from '../types';
 
 export const sidebarData: SidebarData = {
   user: {
@@ -54,88 +42,40 @@ export const sidebarData: SidebarData = {
           url: '/',
           icon: IconLayoutDashboard,
         },
+      ],
+    },
+    {
+      title: 'Tools Management',
+      items: [
         {
-          title: 'Tasks',
-          url: '.',
-          icon: IconChecklist,
-        },
-        {
-          title: 'Apps',
-          url: '.',
-          icon: IconPackages,
-        },
-        {
-          title: 'Chats',
-          url: '.',
-          badge: '3',
-          icon: IconMessages,
-        },
-        {
-          title: 'Users',
-          url: '.',
-          icon: IconUsers,
+          title: 'Tools',
+          icon: IconTool,
+          url: '/tools',
         },
       ],
     },
     {
-      title: 'Pages',
+      title: 'Student Management',
       items: [
         {
-          title: 'Auth',
-          icon: IconLockAccess,
-          items: [
-            {
-              title: 'Sign In',
-              url: '.',
-            },
-            {
-              title: 'Sign In (2 Col)',
-              url: '.',
-            },
-            {
-              title: 'Sign Up',
-              url: '.',
-            },
-            {
-              title: 'Forgot Password',
-              url: '.',
-            },
-            {
-              title: 'OTP',
-              url: '.',
-            },
-          ],
+          title: 'Classes',
+          icon: IconChalkboard,
+          url: '/classes',
         },
         {
-          title: 'Errors',
-          icon: IconBug,
-          items: [
-            {
-              title: 'Unauthorized',
-              url: '.',
-              icon: IconLock,
-            },
-            {
-              title: 'Forbidden',
-              url: '.',
-              icon: IconUserOff,
-            },
-            {
-              title: 'Not Found',
-              url: '.',
-              icon: IconError404,
-            },
-            {
-              title: 'Internal Server Error',
-              url: '.',
-              icon: IconServerOff,
-            },
-            {
-              title: 'Maintenance Error',
-              url: '.',
-              icon: IconBarrierBlock,
-            },
-          ],
+          title: 'Experiments',
+          icon: IconMicroscope,
+          url: '/experiments',
+        },
+        {
+          title: 'Groups',
+          icon: IconUsersGroup,
+          url: '/groups',
+        },
+        {
+          title: 'Students',
+          icon: IconSchool,
+          url: '/students',
         },
       ],
     },
@@ -147,36 +87,11 @@ export const sidebarData: SidebarData = {
           icon: IconSettings,
           items: [
             {
-              title: 'Profile',
-              url: '.',
-              icon: IconUserCog,
-            },
-            {
-              title: 'Account',
-              url: '.',
+              title: 'Data Management',
+              url: '/settings/data-management',
               icon: IconTool,
             },
-            {
-              title: 'Appearance',
-              url: '.',
-              icon: IconPalette,
-            },
-            {
-              title: 'Notifications',
-              url: '.',
-              icon: IconNotification,
-            },
-            {
-              title: 'Display',
-              url: '.',
-              icon: IconBrowserCheck,
-            },
           ],
-        },
-        {
-          title: 'Help Center',
-          url: '.',
-          icon: IconHelp,
         },
       ],
     },
