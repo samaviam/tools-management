@@ -14,6 +14,24 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
 import { Route as AppIndexImport } from './routes/_app/index'
 import { Route as AuthLoginImport } from './routes/auth/login'
+import { Route as AppAboutImport } from './routes/_app/about'
+import { Route as AppToolsIndexImport } from './routes/_app/tools/index'
+import { Route as AppStudentsIndexImport } from './routes/_app/students/index'
+import { Route as AppGroupsIndexImport } from './routes/_app/groups/index'
+import { Route as AppExperimentsIndexImport } from './routes/_app/experiments/index'
+import { Route as AppClassesIndexImport } from './routes/_app/classes/index'
+import { Route as AppToolsCreateImport } from './routes/_app/tools/create'
+import { Route as AppStudentsCreateImport } from './routes/_app/students/create'
+import { Route as AppSettingsDataManagementImport } from './routes/_app/settings/data-management'
+import { Route as AppGroupsCreateImport } from './routes/_app/groups/create'
+import { Route as AppExperimentsCreateImport } from './routes/_app/experiments/create'
+import { Route as AppClassesCreateImport } from './routes/_app/classes/create'
+import { Route as AppToolsIdIndexImport } from './routes/_app/tools/$id/index'
+import { Route as AppExperimentsIdIndexImport } from './routes/_app/experiments/$id/index'
+import { Route as AppClassesIdIndexImport } from './routes/_app/classes/$id/index'
+import { Route as AppToolsIdEditImport } from './routes/_app/tools/$id/edit'
+import { Route as AppExperimentsIdEditImport } from './routes/_app/experiments/$id/edit'
+import { Route as AppClassesIdEditImport } from './routes/_app/classes/$id/edit'
 
 // Create/Update Routes
 
@@ -34,6 +52,114 @@ const AuthLoginRoute = AuthLoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AppAboutRoute = AppAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppToolsIndexRoute = AppToolsIndexImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppStudentsIndexRoute = AppStudentsIndexImport.update({
+  id: '/students/',
+  path: '/students/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppGroupsIndexRoute = AppGroupsIndexImport.update({
+  id: '/groups/',
+  path: '/groups/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppExperimentsIndexRoute = AppExperimentsIndexImport.update({
+  id: '/experiments/',
+  path: '/experiments/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppClassesIndexRoute = AppClassesIndexImport.update({
+  id: '/classes/',
+  path: '/classes/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppToolsCreateRoute = AppToolsCreateImport.update({
+  id: '/tools/create',
+  path: '/tools/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppStudentsCreateRoute = AppStudentsCreateImport.update({
+  id: '/students/create',
+  path: '/students/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppSettingsDataManagementRoute = AppSettingsDataManagementImport.update({
+  id: '/settings/data-management',
+  path: '/settings/data-management',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppGroupsCreateRoute = AppGroupsCreateImport.update({
+  id: '/groups/create',
+  path: '/groups/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppExperimentsCreateRoute = AppExperimentsCreateImport.update({
+  id: '/experiments/create',
+  path: '/experiments/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppClassesCreateRoute = AppClassesCreateImport.update({
+  id: '/classes/create',
+  path: '/classes/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppToolsIdIndexRoute = AppToolsIdIndexImport.update({
+  id: '/tools/$id/',
+  path: '/tools/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppExperimentsIdIndexRoute = AppExperimentsIdIndexImport.update({
+  id: '/experiments/$id/',
+  path: '/experiments/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppClassesIdIndexRoute = AppClassesIdIndexImport.update({
+  id: '/classes/$id/',
+  path: '/classes/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppToolsIdEditRoute = AppToolsIdEditImport.update({
+  id: '/tools/$id/edit',
+  path: '/tools/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppExperimentsIdEditRoute = AppExperimentsIdEditImport.update({
+  id: '/experiments/$id/edit',
+  path: '/experiments/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppClassesIdEditRoute = AppClassesIdEditImport.update({
+  id: '/classes/$id/edit',
+  path: '/classes/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -44,6 +170,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
+    }
+    '/_app/about': {
+      id: '/_app/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AppAboutImport
+      parentRoute: typeof AppImport
     }
     '/auth/login': {
       id: '/auth/login'
@@ -59,45 +192,317 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/classes/create': {
+      id: '/_app/classes/create'
+      path: '/classes/create'
+      fullPath: '/classes/create'
+      preLoaderRoute: typeof AppClassesCreateImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/experiments/create': {
+      id: '/_app/experiments/create'
+      path: '/experiments/create'
+      fullPath: '/experiments/create'
+      preLoaderRoute: typeof AppExperimentsCreateImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/groups/create': {
+      id: '/_app/groups/create'
+      path: '/groups/create'
+      fullPath: '/groups/create'
+      preLoaderRoute: typeof AppGroupsCreateImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/settings/data-management': {
+      id: '/_app/settings/data-management'
+      path: '/settings/data-management'
+      fullPath: '/settings/data-management'
+      preLoaderRoute: typeof AppSettingsDataManagementImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/students/create': {
+      id: '/_app/students/create'
+      path: '/students/create'
+      fullPath: '/students/create'
+      preLoaderRoute: typeof AppStudentsCreateImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/tools/create': {
+      id: '/_app/tools/create'
+      path: '/tools/create'
+      fullPath: '/tools/create'
+      preLoaderRoute: typeof AppToolsCreateImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/classes/': {
+      id: '/_app/classes/'
+      path: '/classes'
+      fullPath: '/classes'
+      preLoaderRoute: typeof AppClassesIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/experiments/': {
+      id: '/_app/experiments/'
+      path: '/experiments'
+      fullPath: '/experiments'
+      preLoaderRoute: typeof AppExperimentsIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/groups/': {
+      id: '/_app/groups/'
+      path: '/groups'
+      fullPath: '/groups'
+      preLoaderRoute: typeof AppGroupsIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/students/': {
+      id: '/_app/students/'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof AppStudentsIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/tools/': {
+      id: '/_app/tools/'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof AppToolsIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/classes/$id/edit': {
+      id: '/_app/classes/$id/edit'
+      path: '/classes/$id/edit'
+      fullPath: '/classes/$id/edit'
+      preLoaderRoute: typeof AppClassesIdEditImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/experiments/$id/edit': {
+      id: '/_app/experiments/$id/edit'
+      path: '/experiments/$id/edit'
+      fullPath: '/experiments/$id/edit'
+      preLoaderRoute: typeof AppExperimentsIdEditImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/tools/$id/edit': {
+      id: '/_app/tools/$id/edit'
+      path: '/tools/$id/edit'
+      fullPath: '/tools/$id/edit'
+      preLoaderRoute: typeof AppToolsIdEditImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/classes/$id/': {
+      id: '/_app/classes/$id/'
+      path: '/classes/$id'
+      fullPath: '/classes/$id'
+      preLoaderRoute: typeof AppClassesIdIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/experiments/$id/': {
+      id: '/_app/experiments/$id/'
+      path: '/experiments/$id'
+      fullPath: '/experiments/$id'
+      preLoaderRoute: typeof AppExperimentsIdIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/tools/$id/': {
+      id: '/_app/tools/$id/'
+      path: '/tools/$id'
+      fullPath: '/tools/$id'
+      preLoaderRoute: typeof AppToolsIdIndexImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AppRouteChildren {
+  AppAboutRoute: typeof AppAboutRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppClassesCreateRoute: typeof AppClassesCreateRoute
+  AppExperimentsCreateRoute: typeof AppExperimentsCreateRoute
+  AppGroupsCreateRoute: typeof AppGroupsCreateRoute
+  AppSettingsDataManagementRoute: typeof AppSettingsDataManagementRoute
+  AppStudentsCreateRoute: typeof AppStudentsCreateRoute
+  AppToolsCreateRoute: typeof AppToolsCreateRoute
+  AppClassesIndexRoute: typeof AppClassesIndexRoute
+  AppExperimentsIndexRoute: typeof AppExperimentsIndexRoute
+  AppGroupsIndexRoute: typeof AppGroupsIndexRoute
+  AppStudentsIndexRoute: typeof AppStudentsIndexRoute
+  AppToolsIndexRoute: typeof AppToolsIndexRoute
+  AppClassesIdEditRoute: typeof AppClassesIdEditRoute
+  AppExperimentsIdEditRoute: typeof AppExperimentsIdEditRoute
+  AppToolsIdEditRoute: typeof AppToolsIdEditRoute
+  AppClassesIdIndexRoute: typeof AppClassesIdIndexRoute
+  AppExperimentsIdIndexRoute: typeof AppExperimentsIdIndexRoute
+  AppToolsIdIndexRoute: typeof AppToolsIdIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAboutRoute: AppAboutRoute,
   AppIndexRoute: AppIndexRoute,
+  AppClassesCreateRoute: AppClassesCreateRoute,
+  AppExperimentsCreateRoute: AppExperimentsCreateRoute,
+  AppGroupsCreateRoute: AppGroupsCreateRoute,
+  AppSettingsDataManagementRoute: AppSettingsDataManagementRoute,
+  AppStudentsCreateRoute: AppStudentsCreateRoute,
+  AppToolsCreateRoute: AppToolsCreateRoute,
+  AppClassesIndexRoute: AppClassesIndexRoute,
+  AppExperimentsIndexRoute: AppExperimentsIndexRoute,
+  AppGroupsIndexRoute: AppGroupsIndexRoute,
+  AppStudentsIndexRoute: AppStudentsIndexRoute,
+  AppToolsIndexRoute: AppToolsIndexRoute,
+  AppClassesIdEditRoute: AppClassesIdEditRoute,
+  AppExperimentsIdEditRoute: AppExperimentsIdEditRoute,
+  AppToolsIdEditRoute: AppToolsIdEditRoute,
+  AppClassesIdIndexRoute: AppClassesIdIndexRoute,
+  AppExperimentsIdIndexRoute: AppExperimentsIdIndexRoute,
+  AppToolsIdIndexRoute: AppToolsIdIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof AppRouteWithChildren
+  '/about': typeof AppAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
+  '/classes/create': typeof AppClassesCreateRoute
+  '/experiments/create': typeof AppExperimentsCreateRoute
+  '/groups/create': typeof AppGroupsCreateRoute
+  '/settings/data-management': typeof AppSettingsDataManagementRoute
+  '/students/create': typeof AppStudentsCreateRoute
+  '/tools/create': typeof AppToolsCreateRoute
+  '/classes': typeof AppClassesIndexRoute
+  '/experiments': typeof AppExperimentsIndexRoute
+  '/groups': typeof AppGroupsIndexRoute
+  '/students': typeof AppStudentsIndexRoute
+  '/tools': typeof AppToolsIndexRoute
+  '/classes/$id/edit': typeof AppClassesIdEditRoute
+  '/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/tools/$id/edit': typeof AppToolsIdEditRoute
+  '/classes/$id': typeof AppClassesIdIndexRoute
+  '/experiments/$id': typeof AppExperimentsIdIndexRoute
+  '/tools/$id': typeof AppToolsIdIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '/about': typeof AppAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
+  '/classes/create': typeof AppClassesCreateRoute
+  '/experiments/create': typeof AppExperimentsCreateRoute
+  '/groups/create': typeof AppGroupsCreateRoute
+  '/settings/data-management': typeof AppSettingsDataManagementRoute
+  '/students/create': typeof AppStudentsCreateRoute
+  '/tools/create': typeof AppToolsCreateRoute
+  '/classes': typeof AppClassesIndexRoute
+  '/experiments': typeof AppExperimentsIndexRoute
+  '/groups': typeof AppGroupsIndexRoute
+  '/students': typeof AppStudentsIndexRoute
+  '/tools': typeof AppToolsIndexRoute
+  '/classes/$id/edit': typeof AppClassesIdEditRoute
+  '/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/tools/$id/edit': typeof AppToolsIdEditRoute
+  '/classes/$id': typeof AppClassesIdIndexRoute
+  '/experiments/$id': typeof AppExperimentsIdIndexRoute
+  '/tools/$id': typeof AppToolsIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/about': typeof AppAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/classes/create': typeof AppClassesCreateRoute
+  '/_app/experiments/create': typeof AppExperimentsCreateRoute
+  '/_app/groups/create': typeof AppGroupsCreateRoute
+  '/_app/settings/data-management': typeof AppSettingsDataManagementRoute
+  '/_app/students/create': typeof AppStudentsCreateRoute
+  '/_app/tools/create': typeof AppToolsCreateRoute
+  '/_app/classes/': typeof AppClassesIndexRoute
+  '/_app/experiments/': typeof AppExperimentsIndexRoute
+  '/_app/groups/': typeof AppGroupsIndexRoute
+  '/_app/students/': typeof AppStudentsIndexRoute
+  '/_app/tools/': typeof AppToolsIndexRoute
+  '/_app/classes/$id/edit': typeof AppClassesIdEditRoute
+  '/_app/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/_app/tools/$id/edit': typeof AppToolsIdEditRoute
+  '/_app/classes/$id/': typeof AppClassesIdIndexRoute
+  '/_app/experiments/$id/': typeof AppExperimentsIdIndexRoute
+  '/_app/tools/$id/': typeof AppToolsIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/auth/login' | '/'
+  fullPaths:
+    | ''
+    | '/about'
+    | '/auth/login'
+    | '/'
+    | '/classes/create'
+    | '/experiments/create'
+    | '/groups/create'
+    | '/settings/data-management'
+    | '/students/create'
+    | '/tools/create'
+    | '/classes'
+    | '/experiments'
+    | '/groups'
+    | '/students'
+    | '/tools'
+    | '/classes/$id/edit'
+    | '/experiments/$id/edit'
+    | '/tools/$id/edit'
+    | '/classes/$id'
+    | '/experiments/$id'
+    | '/tools/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth/login' | '/'
-  id: '__root__' | '/_app' | '/auth/login' | '/_app/'
+  to:
+    | '/about'
+    | '/auth/login'
+    | '/'
+    | '/classes/create'
+    | '/experiments/create'
+    | '/groups/create'
+    | '/settings/data-management'
+    | '/students/create'
+    | '/tools/create'
+    | '/classes'
+    | '/experiments'
+    | '/groups'
+    | '/students'
+    | '/tools'
+    | '/classes/$id/edit'
+    | '/experiments/$id/edit'
+    | '/tools/$id/edit'
+    | '/classes/$id'
+    | '/experiments/$id'
+    | '/tools/$id'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/about'
+    | '/auth/login'
+    | '/_app/'
+    | '/_app/classes/create'
+    | '/_app/experiments/create'
+    | '/_app/groups/create'
+    | '/_app/settings/data-management'
+    | '/_app/students/create'
+    | '/_app/tools/create'
+    | '/_app/classes/'
+    | '/_app/experiments/'
+    | '/_app/groups/'
+    | '/_app/students/'
+    | '/_app/tools/'
+    | '/_app/classes/$id/edit'
+    | '/_app/experiments/$id/edit'
+    | '/_app/tools/$id/edit'
+    | '/_app/classes/$id/'
+    | '/_app/experiments/$id/'
+    | '/_app/tools/$id/'
   fileRoutesById: FileRoutesById
 }
 
@@ -128,14 +533,104 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/"
+        "/_app/about",
+        "/_app/",
+        "/_app/classes/create",
+        "/_app/experiments/create",
+        "/_app/groups/create",
+        "/_app/settings/data-management",
+        "/_app/students/create",
+        "/_app/tools/create",
+        "/_app/classes/",
+        "/_app/experiments/",
+        "/_app/groups/",
+        "/_app/students/",
+        "/_app/tools/",
+        "/_app/classes/$id/edit",
+        "/_app/experiments/$id/edit",
+        "/_app/tools/$id/edit",
+        "/_app/classes/$id/",
+        "/_app/experiments/$id/",
+        "/_app/tools/$id/"
       ]
+    },
+    "/_app/about": {
+      "filePath": "_app/about.tsx",
+      "parent": "/_app"
     },
     "/auth/login": {
       "filePath": "auth/login.tsx"
     },
     "/_app/": {
       "filePath": "_app/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/classes/create": {
+      "filePath": "_app/classes/create.tsx",
+      "parent": "/_app"
+    },
+    "/_app/experiments/create": {
+      "filePath": "_app/experiments/create.tsx",
+      "parent": "/_app"
+    },
+    "/_app/groups/create": {
+      "filePath": "_app/groups/create.tsx",
+      "parent": "/_app"
+    },
+    "/_app/settings/data-management": {
+      "filePath": "_app/settings/data-management.tsx",
+      "parent": "/_app"
+    },
+    "/_app/students/create": {
+      "filePath": "_app/students/create.tsx",
+      "parent": "/_app"
+    },
+    "/_app/tools/create": {
+      "filePath": "_app/tools/create.tsx",
+      "parent": "/_app"
+    },
+    "/_app/classes/": {
+      "filePath": "_app/classes/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/experiments/": {
+      "filePath": "_app/experiments/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/groups/": {
+      "filePath": "_app/groups/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/students/": {
+      "filePath": "_app/students/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/tools/": {
+      "filePath": "_app/tools/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/classes/$id/edit": {
+      "filePath": "_app/classes/$id/edit.tsx",
+      "parent": "/_app"
+    },
+    "/_app/experiments/$id/edit": {
+      "filePath": "_app/experiments/$id/edit.tsx",
+      "parent": "/_app"
+    },
+    "/_app/tools/$id/edit": {
+      "filePath": "_app/tools/$id/edit.tsx",
+      "parent": "/_app"
+    },
+    "/_app/classes/$id/": {
+      "filePath": "_app/classes/$id/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/experiments/$id/": {
+      "filePath": "_app/experiments/$id/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/tools/$id/": {
+      "filePath": "_app/tools/$id/index.tsx",
       "parent": "/_app"
     }
   }

@@ -3,6 +3,7 @@ import { AppSidebar } from '@/components/layout/app-sidebar';
 import { Header } from '@/components/layout/header';
 import Providers from '@/providers';
 import { cn } from '@/libs/utils';
+import { Toaster } from '@/components/ui/sonner';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: ({ context, location }) => {
@@ -23,7 +24,7 @@ function RootComponent() {
           'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
           'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
           'transition-[width] duration-200 ease-linear',
-          'flex h-svh flex-col',
+          'flex flex-col',
           'group-data-[scroll-locked=1]/body:h-full',
           'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh',
         )}
@@ -32,6 +33,8 @@ function RootComponent() {
 
         <Outlet />
       </div>
+
+      <Toaster />
     </Providers>
   );
 }
