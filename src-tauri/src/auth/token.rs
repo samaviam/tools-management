@@ -1,6 +1,6 @@
+use chrono::{Duration, Utc};
 use jsonwebtoken::{encode, EncodingKey, Header};
 use serde::{Deserialize, Serialize};
-use chrono::{Utc, Duration};
 use std::env;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -22,5 +22,9 @@ pub fn generate_token(user_id: &str) -> Result<String, jsonwebtoken::errors::Err
         exp: expiration,
     };
 
-    encode(&Header::default(), &claims, &EncodingKey::from_secret(secret.as_ref()))
+    encode(
+        &Header::default(),
+        &claims,
+        &EncodingKey::from_secret(secret.as_ref()),
+    )
 }

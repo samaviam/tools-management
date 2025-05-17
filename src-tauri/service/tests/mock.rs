@@ -1,8 +1,8 @@
 mod prepare;
 
-use service::{Mutation, Query};
 use entity::users;
 use prepare::prepare_mock_db;
+use service::{Mutation, Query};
 
 #[tokio::test]
 async fn main() {

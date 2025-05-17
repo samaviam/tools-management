@@ -1,4 +1,4 @@
-use ::entity::{users, users::Entity as Users};
+use ::entity::{tools, tools::Entity as Tools, users, users::Entity as Users};
 use sea_orm::{sqlx::types::chrono::Utc, *};
 
 pub struct Mutation;
@@ -55,5 +55,32 @@ impl Mutation {
 
     pub async fn delete_all_users(db: &DbConn) -> Result<DeleteResult, DbErr> {
         Users::delete_many().exec(db).await
+    }
+
+    pub async fn create_tools_batch(
+        db: &DbConn,
+        tools_data: Vec<tools::Model>,
+    ) -> Result<InsertResult<tools::ActiveModel>, DbErr> {
+        let now = Utc::now().into();
+
+        let active_models: Vec<tools::ActiveModel> = tools_data
+            .into_iter()
+            .map(|tool| tools::ActiveModel {
+                serial_code: Set(tool.serial_code),
+                name: Set(tool.name),
+                brand: Set(tool.brand),
+                accuracy: Set(tool.accuracy),
+                range: Set(tool.range),
+                serial_number: Set(tool.serial_number),
+                property_code: Set(tool.property_code),
+                quantity: Set(tool.quantity),
+                description: Set(tool.description),
+                created_at: Set(now),
+                updated_at: Set(now),
+                ..Default::default()
+            })
+            .collect();
+
+        Tools::insert_many(active_models).exec(db).await
     }
 }

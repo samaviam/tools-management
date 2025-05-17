@@ -4,15 +4,22 @@ use sea_orm::{entity::prelude::*, sqlx::types::chrono, ActiveValue::Set};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
-#[sea_orm(table_name = "users")]
+#[sea_orm(table_name = "tools")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = true)]
     #[serde(skip_deserializing)]
     pub id: i32,
+
+    pub serial_code: String,
     pub name: String,
-    #[sea_orm(unique)]
-    pub email: String,
-    pub password: String,
+    pub brand: Option<String>,
+    pub accuracy: Option<String>,
+    pub range: Option<String>,
+    pub serial_number: Option<String>,
+    pub property_code: Option<String>,
+    pub quantity: Option<i32>,
+    pub description: Option<String>,
+
     #[serde(default = "default_created_at")]
     pub created_at: DateTimeWithTimeZone,
     #[serde(default = "default_updated_at")]
@@ -36,9 +43,15 @@ impl Default for Model {
     fn default() -> Self {
         Self {
             id: 0,
+            serial_code: String::new(),
             name: String::new(),
-            email: String::new(),
-            password: String::new(),
+            brand: None,
+            accuracy: None,
+            range: None,
+            serial_number: None,
+            property_code: None,
+            quantity: None,
+            description: None,
             created_at: default_created_at(),
             updated_at: default_updated_at(),
         }
