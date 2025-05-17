@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
-import { useMatches } from '@tanstack/react-router';
-import { ChevronsUpDown, LogOut } from 'lucide-react';
+import { Link, useMatches } from '@tanstack/react-router';
+import { ChevronsUpDown, Info, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -69,34 +70,15 @@ export function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link to=".">
-                  <BadgeCheck />
-                  Account
+                <Link to="/about">
+                  <Info />
+                  About App
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to=".">
-                  <CreditCard />
-                  Billing
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to=".">
-                  <Bell />
-                  Notifications
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
