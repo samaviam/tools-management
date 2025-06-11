@@ -10,7 +10,7 @@ export function formatDate(
       day: opts.day ?? 'numeric',
       year: opts.year ?? 'numeric',
       ...opts,
-    }).format(new Date(date));
+    }).format(new Date(`${date} UTC`));
   } catch (_err) {
     return '';
   }
