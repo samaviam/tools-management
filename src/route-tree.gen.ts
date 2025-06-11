@@ -17,19 +17,27 @@ import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as AppAboutImport } from './routes/_app/about'
 import { Route as AppToolsIndexImport } from './routes/_app/tools/index'
 import { Route as AppStudentsIndexImport } from './routes/_app/students/index'
+import { Route as AppSchedulesIndexImport } from './routes/_app/schedules/index'
 import { Route as AppGroupsIndexImport } from './routes/_app/groups/index'
 import { Route as AppExperimentsIndexImport } from './routes/_app/experiments/index'
 import { Route as AppClassesIndexImport } from './routes/_app/classes/index'
 import { Route as AppToolsCreateImport } from './routes/_app/tools/create'
 import { Route as AppStudentsCreateImport } from './routes/_app/students/create'
 import { Route as AppSettingsDataManagementImport } from './routes/_app/settings/data-management'
+import { Route as AppSchedulesCreateImport } from './routes/_app/schedules/create'
 import { Route as AppGroupsCreateImport } from './routes/_app/groups/create'
 import { Route as AppExperimentsCreateImport } from './routes/_app/experiments/create'
 import { Route as AppClassesCreateImport } from './routes/_app/classes/create'
 import { Route as AppToolsIdIndexImport } from './routes/_app/tools/$id/index'
+import { Route as AppStudentsIdIndexImport } from './routes/_app/students/$id/index'
+import { Route as AppSchedulesIdIndexImport } from './routes/_app/schedules/$id/index'
+import { Route as AppGroupsIdIndexImport } from './routes/_app/groups/$id/index'
 import { Route as AppExperimentsIdIndexImport } from './routes/_app/experiments/$id/index'
 import { Route as AppClassesIdIndexImport } from './routes/_app/classes/$id/index'
 import { Route as AppToolsIdEditImport } from './routes/_app/tools/$id/edit'
+import { Route as AppStudentsIdEditImport } from './routes/_app/students/$id/edit'
+import { Route as AppSchedulesIdEditImport } from './routes/_app/schedules/$id/edit'
+import { Route as AppGroupsIdEditImport } from './routes/_app/groups/$id/edit'
 import { Route as AppExperimentsIdEditImport } from './routes/_app/experiments/$id/edit'
 import { Route as AppClassesIdEditImport } from './routes/_app/classes/$id/edit'
 
@@ -70,6 +78,12 @@ const AppStudentsIndexRoute = AppStudentsIndexImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppSchedulesIndexRoute = AppSchedulesIndexImport.update({
+  id: '/schedules/',
+  path: '/schedules/',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppGroupsIndexRoute = AppGroupsIndexImport.update({
   id: '/groups/',
   path: '/groups/',
@@ -106,6 +120,12 @@ const AppSettingsDataManagementRoute = AppSettingsDataManagementImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppSchedulesCreateRoute = AppSchedulesCreateImport.update({
+  id: '/schedules/create',
+  path: '/schedules/create',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppGroupsCreateRoute = AppGroupsCreateImport.update({
   id: '/groups/create',
   path: '/groups/create',
@@ -130,6 +150,24 @@ const AppToolsIdIndexRoute = AppToolsIdIndexImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppStudentsIdIndexRoute = AppStudentsIdIndexImport.update({
+  id: '/students/$id/',
+  path: '/students/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppSchedulesIdIndexRoute = AppSchedulesIdIndexImport.update({
+  id: '/schedules/$id/',
+  path: '/schedules/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppGroupsIdIndexRoute = AppGroupsIdIndexImport.update({
+  id: '/groups/$id/',
+  path: '/groups/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppExperimentsIdIndexRoute = AppExperimentsIdIndexImport.update({
   id: '/experiments/$id/',
   path: '/experiments/$id/',
@@ -145,6 +183,24 @@ const AppClassesIdIndexRoute = AppClassesIdIndexImport.update({
 const AppToolsIdEditRoute = AppToolsIdEditImport.update({
   id: '/tools/$id/edit',
   path: '/tools/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppStudentsIdEditRoute = AppStudentsIdEditImport.update({
+  id: '/students/$id/edit',
+  path: '/students/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppSchedulesIdEditRoute = AppSchedulesIdEditImport.update({
+  id: '/schedules/$id/edit',
+  path: '/schedules/$id/edit',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppGroupsIdEditRoute = AppGroupsIdEditImport.update({
+  id: '/groups/$id/edit',
+  path: '/groups/$id/edit',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -213,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGroupsCreateImport
       parentRoute: typeof AppImport
     }
+    '/_app/schedules/create': {
+      id: '/_app/schedules/create'
+      path: '/schedules/create'
+      fullPath: '/schedules/create'
+      preLoaderRoute: typeof AppSchedulesCreateImport
+      parentRoute: typeof AppImport
+    }
     '/_app/settings/data-management': {
       id: '/_app/settings/data-management'
       path: '/settings/data-management'
@@ -255,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGroupsIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/schedules/': {
+      id: '/_app/schedules/'
+      path: '/schedules'
+      fullPath: '/schedules'
+      preLoaderRoute: typeof AppSchedulesIndexImport
+      parentRoute: typeof AppImport
+    }
     '/_app/students/': {
       id: '/_app/students/'
       path: '/students'
@@ -283,6 +353,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppExperimentsIdEditImport
       parentRoute: typeof AppImport
     }
+    '/_app/groups/$id/edit': {
+      id: '/_app/groups/$id/edit'
+      path: '/groups/$id/edit'
+      fullPath: '/groups/$id/edit'
+      preLoaderRoute: typeof AppGroupsIdEditImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/schedules/$id/edit': {
+      id: '/_app/schedules/$id/edit'
+      path: '/schedules/$id/edit'
+      fullPath: '/schedules/$id/edit'
+      preLoaderRoute: typeof AppSchedulesIdEditImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/students/$id/edit': {
+      id: '/_app/students/$id/edit'
+      path: '/students/$id/edit'
+      fullPath: '/students/$id/edit'
+      preLoaderRoute: typeof AppStudentsIdEditImport
+      parentRoute: typeof AppImport
+    }
     '/_app/tools/$id/edit': {
       id: '/_app/tools/$id/edit'
       path: '/tools/$id/edit'
@@ -304,6 +395,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppExperimentsIdIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/groups/$id/': {
+      id: '/_app/groups/$id/'
+      path: '/groups/$id'
+      fullPath: '/groups/$id'
+      preLoaderRoute: typeof AppGroupsIdIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/schedules/$id/': {
+      id: '/_app/schedules/$id/'
+      path: '/schedules/$id'
+      fullPath: '/schedules/$id'
+      preLoaderRoute: typeof AppSchedulesIdIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/students/$id/': {
+      id: '/_app/students/$id/'
+      path: '/students/$id'
+      fullPath: '/students/$id'
+      preLoaderRoute: typeof AppStudentsIdIndexImport
+      parentRoute: typeof AppImport
+    }
     '/_app/tools/$id/': {
       id: '/_app/tools/$id/'
       path: '/tools/$id'
@@ -322,19 +434,27 @@ interface AppRouteChildren {
   AppClassesCreateRoute: typeof AppClassesCreateRoute
   AppExperimentsCreateRoute: typeof AppExperimentsCreateRoute
   AppGroupsCreateRoute: typeof AppGroupsCreateRoute
+  AppSchedulesCreateRoute: typeof AppSchedulesCreateRoute
   AppSettingsDataManagementRoute: typeof AppSettingsDataManagementRoute
   AppStudentsCreateRoute: typeof AppStudentsCreateRoute
   AppToolsCreateRoute: typeof AppToolsCreateRoute
   AppClassesIndexRoute: typeof AppClassesIndexRoute
   AppExperimentsIndexRoute: typeof AppExperimentsIndexRoute
   AppGroupsIndexRoute: typeof AppGroupsIndexRoute
+  AppSchedulesIndexRoute: typeof AppSchedulesIndexRoute
   AppStudentsIndexRoute: typeof AppStudentsIndexRoute
   AppToolsIndexRoute: typeof AppToolsIndexRoute
   AppClassesIdEditRoute: typeof AppClassesIdEditRoute
   AppExperimentsIdEditRoute: typeof AppExperimentsIdEditRoute
+  AppGroupsIdEditRoute: typeof AppGroupsIdEditRoute
+  AppSchedulesIdEditRoute: typeof AppSchedulesIdEditRoute
+  AppStudentsIdEditRoute: typeof AppStudentsIdEditRoute
   AppToolsIdEditRoute: typeof AppToolsIdEditRoute
   AppClassesIdIndexRoute: typeof AppClassesIdIndexRoute
   AppExperimentsIdIndexRoute: typeof AppExperimentsIdIndexRoute
+  AppGroupsIdIndexRoute: typeof AppGroupsIdIndexRoute
+  AppSchedulesIdIndexRoute: typeof AppSchedulesIdIndexRoute
+  AppStudentsIdIndexRoute: typeof AppStudentsIdIndexRoute
   AppToolsIdIndexRoute: typeof AppToolsIdIndexRoute
 }
 
@@ -344,19 +464,27 @@ const AppRouteChildren: AppRouteChildren = {
   AppClassesCreateRoute: AppClassesCreateRoute,
   AppExperimentsCreateRoute: AppExperimentsCreateRoute,
   AppGroupsCreateRoute: AppGroupsCreateRoute,
+  AppSchedulesCreateRoute: AppSchedulesCreateRoute,
   AppSettingsDataManagementRoute: AppSettingsDataManagementRoute,
   AppStudentsCreateRoute: AppStudentsCreateRoute,
   AppToolsCreateRoute: AppToolsCreateRoute,
   AppClassesIndexRoute: AppClassesIndexRoute,
   AppExperimentsIndexRoute: AppExperimentsIndexRoute,
   AppGroupsIndexRoute: AppGroupsIndexRoute,
+  AppSchedulesIndexRoute: AppSchedulesIndexRoute,
   AppStudentsIndexRoute: AppStudentsIndexRoute,
   AppToolsIndexRoute: AppToolsIndexRoute,
   AppClassesIdEditRoute: AppClassesIdEditRoute,
   AppExperimentsIdEditRoute: AppExperimentsIdEditRoute,
+  AppGroupsIdEditRoute: AppGroupsIdEditRoute,
+  AppSchedulesIdEditRoute: AppSchedulesIdEditRoute,
+  AppStudentsIdEditRoute: AppStudentsIdEditRoute,
   AppToolsIdEditRoute: AppToolsIdEditRoute,
   AppClassesIdIndexRoute: AppClassesIdIndexRoute,
   AppExperimentsIdIndexRoute: AppExperimentsIdIndexRoute,
+  AppGroupsIdIndexRoute: AppGroupsIdIndexRoute,
+  AppSchedulesIdIndexRoute: AppSchedulesIdIndexRoute,
+  AppStudentsIdIndexRoute: AppStudentsIdIndexRoute,
   AppToolsIdIndexRoute: AppToolsIdIndexRoute,
 }
 
@@ -370,19 +498,27 @@ export interface FileRoutesByFullPath {
   '/classes/create': typeof AppClassesCreateRoute
   '/experiments/create': typeof AppExperimentsCreateRoute
   '/groups/create': typeof AppGroupsCreateRoute
+  '/schedules/create': typeof AppSchedulesCreateRoute
   '/settings/data-management': typeof AppSettingsDataManagementRoute
   '/students/create': typeof AppStudentsCreateRoute
   '/tools/create': typeof AppToolsCreateRoute
   '/classes': typeof AppClassesIndexRoute
   '/experiments': typeof AppExperimentsIndexRoute
   '/groups': typeof AppGroupsIndexRoute
+  '/schedules': typeof AppSchedulesIndexRoute
   '/students': typeof AppStudentsIndexRoute
   '/tools': typeof AppToolsIndexRoute
   '/classes/$id/edit': typeof AppClassesIdEditRoute
   '/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/groups/$id/edit': typeof AppGroupsIdEditRoute
+  '/schedules/$id/edit': typeof AppSchedulesIdEditRoute
+  '/students/$id/edit': typeof AppStudentsIdEditRoute
   '/tools/$id/edit': typeof AppToolsIdEditRoute
   '/classes/$id': typeof AppClassesIdIndexRoute
   '/experiments/$id': typeof AppExperimentsIdIndexRoute
+  '/groups/$id': typeof AppGroupsIdIndexRoute
+  '/schedules/$id': typeof AppSchedulesIdIndexRoute
+  '/students/$id': typeof AppStudentsIdIndexRoute
   '/tools/$id': typeof AppToolsIdIndexRoute
 }
 
@@ -393,19 +529,27 @@ export interface FileRoutesByTo {
   '/classes/create': typeof AppClassesCreateRoute
   '/experiments/create': typeof AppExperimentsCreateRoute
   '/groups/create': typeof AppGroupsCreateRoute
+  '/schedules/create': typeof AppSchedulesCreateRoute
   '/settings/data-management': typeof AppSettingsDataManagementRoute
   '/students/create': typeof AppStudentsCreateRoute
   '/tools/create': typeof AppToolsCreateRoute
   '/classes': typeof AppClassesIndexRoute
   '/experiments': typeof AppExperimentsIndexRoute
   '/groups': typeof AppGroupsIndexRoute
+  '/schedules': typeof AppSchedulesIndexRoute
   '/students': typeof AppStudentsIndexRoute
   '/tools': typeof AppToolsIndexRoute
   '/classes/$id/edit': typeof AppClassesIdEditRoute
   '/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/groups/$id/edit': typeof AppGroupsIdEditRoute
+  '/schedules/$id/edit': typeof AppSchedulesIdEditRoute
+  '/students/$id/edit': typeof AppStudentsIdEditRoute
   '/tools/$id/edit': typeof AppToolsIdEditRoute
   '/classes/$id': typeof AppClassesIdIndexRoute
   '/experiments/$id': typeof AppExperimentsIdIndexRoute
+  '/groups/$id': typeof AppGroupsIdIndexRoute
+  '/schedules/$id': typeof AppSchedulesIdIndexRoute
+  '/students/$id': typeof AppStudentsIdIndexRoute
   '/tools/$id': typeof AppToolsIdIndexRoute
 }
 
@@ -418,19 +562,27 @@ export interface FileRoutesById {
   '/_app/classes/create': typeof AppClassesCreateRoute
   '/_app/experiments/create': typeof AppExperimentsCreateRoute
   '/_app/groups/create': typeof AppGroupsCreateRoute
+  '/_app/schedules/create': typeof AppSchedulesCreateRoute
   '/_app/settings/data-management': typeof AppSettingsDataManagementRoute
   '/_app/students/create': typeof AppStudentsCreateRoute
   '/_app/tools/create': typeof AppToolsCreateRoute
   '/_app/classes/': typeof AppClassesIndexRoute
   '/_app/experiments/': typeof AppExperimentsIndexRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
+  '/_app/schedules/': typeof AppSchedulesIndexRoute
   '/_app/students/': typeof AppStudentsIndexRoute
   '/_app/tools/': typeof AppToolsIndexRoute
   '/_app/classes/$id/edit': typeof AppClassesIdEditRoute
   '/_app/experiments/$id/edit': typeof AppExperimentsIdEditRoute
+  '/_app/groups/$id/edit': typeof AppGroupsIdEditRoute
+  '/_app/schedules/$id/edit': typeof AppSchedulesIdEditRoute
+  '/_app/students/$id/edit': typeof AppStudentsIdEditRoute
   '/_app/tools/$id/edit': typeof AppToolsIdEditRoute
   '/_app/classes/$id/': typeof AppClassesIdIndexRoute
   '/_app/experiments/$id/': typeof AppExperimentsIdIndexRoute
+  '/_app/groups/$id/': typeof AppGroupsIdIndexRoute
+  '/_app/schedules/$id/': typeof AppSchedulesIdIndexRoute
+  '/_app/students/$id/': typeof AppStudentsIdIndexRoute
   '/_app/tools/$id/': typeof AppToolsIdIndexRoute
 }
 
@@ -444,19 +596,27 @@ export interface FileRouteTypes {
     | '/classes/create'
     | '/experiments/create'
     | '/groups/create'
+    | '/schedules/create'
     | '/settings/data-management'
     | '/students/create'
     | '/tools/create'
     | '/classes'
     | '/experiments'
     | '/groups'
+    | '/schedules'
     | '/students'
     | '/tools'
     | '/classes/$id/edit'
     | '/experiments/$id/edit'
+    | '/groups/$id/edit'
+    | '/schedules/$id/edit'
+    | '/students/$id/edit'
     | '/tools/$id/edit'
     | '/classes/$id'
     | '/experiments/$id'
+    | '/groups/$id'
+    | '/schedules/$id'
+    | '/students/$id'
     | '/tools/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -466,19 +626,27 @@ export interface FileRouteTypes {
     | '/classes/create'
     | '/experiments/create'
     | '/groups/create'
+    | '/schedules/create'
     | '/settings/data-management'
     | '/students/create'
     | '/tools/create'
     | '/classes'
     | '/experiments'
     | '/groups'
+    | '/schedules'
     | '/students'
     | '/tools'
     | '/classes/$id/edit'
     | '/experiments/$id/edit'
+    | '/groups/$id/edit'
+    | '/schedules/$id/edit'
+    | '/students/$id/edit'
     | '/tools/$id/edit'
     | '/classes/$id'
     | '/experiments/$id'
+    | '/groups/$id'
+    | '/schedules/$id'
+    | '/students/$id'
     | '/tools/$id'
   id:
     | '__root__'
@@ -489,19 +657,27 @@ export interface FileRouteTypes {
     | '/_app/classes/create'
     | '/_app/experiments/create'
     | '/_app/groups/create'
+    | '/_app/schedules/create'
     | '/_app/settings/data-management'
     | '/_app/students/create'
     | '/_app/tools/create'
     | '/_app/classes/'
     | '/_app/experiments/'
     | '/_app/groups/'
+    | '/_app/schedules/'
     | '/_app/students/'
     | '/_app/tools/'
     | '/_app/classes/$id/edit'
     | '/_app/experiments/$id/edit'
+    | '/_app/groups/$id/edit'
+    | '/_app/schedules/$id/edit'
+    | '/_app/students/$id/edit'
     | '/_app/tools/$id/edit'
     | '/_app/classes/$id/'
     | '/_app/experiments/$id/'
+    | '/_app/groups/$id/'
+    | '/_app/schedules/$id/'
+    | '/_app/students/$id/'
     | '/_app/tools/$id/'
   fileRoutesById: FileRoutesById
 }
@@ -538,19 +714,27 @@ export const routeTree = rootRoute
         "/_app/classes/create",
         "/_app/experiments/create",
         "/_app/groups/create",
+        "/_app/schedules/create",
         "/_app/settings/data-management",
         "/_app/students/create",
         "/_app/tools/create",
         "/_app/classes/",
         "/_app/experiments/",
         "/_app/groups/",
+        "/_app/schedules/",
         "/_app/students/",
         "/_app/tools/",
         "/_app/classes/$id/edit",
         "/_app/experiments/$id/edit",
+        "/_app/groups/$id/edit",
+        "/_app/schedules/$id/edit",
+        "/_app/students/$id/edit",
         "/_app/tools/$id/edit",
         "/_app/classes/$id/",
         "/_app/experiments/$id/",
+        "/_app/groups/$id/",
+        "/_app/schedules/$id/",
+        "/_app/students/$id/",
         "/_app/tools/$id/"
       ]
     },
@@ -577,6 +761,10 @@ export const routeTree = rootRoute
       "filePath": "_app/groups/create.tsx",
       "parent": "/_app"
     },
+    "/_app/schedules/create": {
+      "filePath": "_app/schedules/create.tsx",
+      "parent": "/_app"
+    },
     "/_app/settings/data-management": {
       "filePath": "_app/settings/data-management.tsx",
       "parent": "/_app"
@@ -601,6 +789,10 @@ export const routeTree = rootRoute
       "filePath": "_app/groups/index.tsx",
       "parent": "/_app"
     },
+    "/_app/schedules/": {
+      "filePath": "_app/schedules/index.tsx",
+      "parent": "/_app"
+    },
     "/_app/students/": {
       "filePath": "_app/students/index.tsx",
       "parent": "/_app"
@@ -617,6 +809,18 @@ export const routeTree = rootRoute
       "filePath": "_app/experiments/$id/edit.tsx",
       "parent": "/_app"
     },
+    "/_app/groups/$id/edit": {
+      "filePath": "_app/groups/$id/edit.tsx",
+      "parent": "/_app"
+    },
+    "/_app/schedules/$id/edit": {
+      "filePath": "_app/schedules/$id/edit.tsx",
+      "parent": "/_app"
+    },
+    "/_app/students/$id/edit": {
+      "filePath": "_app/students/$id/edit.tsx",
+      "parent": "/_app"
+    },
     "/_app/tools/$id/edit": {
       "filePath": "_app/tools/$id/edit.tsx",
       "parent": "/_app"
@@ -627,6 +831,18 @@ export const routeTree = rootRoute
     },
     "/_app/experiments/$id/": {
       "filePath": "_app/experiments/$id/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/groups/$id/": {
+      "filePath": "_app/groups/$id/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/schedules/$id/": {
+      "filePath": "_app/schedules/$id/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/students/$id/": {
+      "filePath": "_app/students/$id/index.tsx",
       "parent": "/_app"
     },
     "/_app/tools/$id/": {
