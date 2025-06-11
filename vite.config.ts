@@ -29,6 +29,9 @@ export default defineConfig(async () => ({
   // 1. prevent vite from obscuring rust errors
   clearScreen: false,
   // 2. tauri expects a fixed port, fail if that port is not available
+  build: {
+    target: 'esnext',
+  },
   server: {
     port: 1420,
     strictPort: true,
@@ -42,7 +45,7 @@ export default defineConfig(async () => ({
       : undefined,
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
-      ignored: ['**/src-tauri/**'],
+      ignored: ['**/src-tauri/**', '**/src-tauri-old/**'],
     },
   },
 }));
