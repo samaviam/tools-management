@@ -1,0 +1,1 @@
+INSERT INTO "users" ("name", "email", "password") VALUES ("Admin", "admin@example.com", "$2b$10$kS6sNsbbPhau7smb8f9N0.HD5p0F8K/Xn0x3Bxs2fc/EVUO3L0JWS");

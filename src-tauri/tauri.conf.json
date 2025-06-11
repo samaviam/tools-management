@@ -9,11 +9,6 @@
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../dist"
   },
-  "plugins": {
-    "sql": {
-      "preload": ["sqlite:app.db"]
-    }
-  },
   "app": {
     "windows": [
       {
@@ -26,8 +21,7 @@
       }
     ],
     "security": {
-      "csp": null,
-      "capabilities": ["main-capability"]
+      "csp": null
     }
   },
   "bundle": {
@@ -39,6 +33,7 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "resources": ["migrations/*"]
   }
 }
