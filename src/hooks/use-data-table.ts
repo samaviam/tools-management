@@ -2,7 +2,7 @@ import {
   type ColumnFiltersState,
   type PaginationState,
   type RowSelectionState,
-  type SortingState,
+  // type SortingState,
   type TableOptions,
   type TableState,
   type Updater,
@@ -28,12 +28,12 @@ import {
 import * as React from 'react';
 
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
-import { getSortingStateParser } from '@/libs/parsers';
+// import { getSortingStateParser } from '@/libs/parsers';
 import type { ExtendedColumnSort } from '@/types/data-table';
 
 const PAGE_KEY = 'page';
 const PER_PAGE_KEY = 'perPage';
-const SORT_KEY = 'sort';
+// const SORT_KEY = 'sort';
 const ARRAY_SEPARATOR = ',';
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
@@ -137,30 +137,30 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     [pagination, setPage, setPerPage],
   );
 
-  const columnIds = React.useMemo(() => {
-    return new Set(
-      columns.map((column) => column.id).filter(Boolean) as string[],
-    );
-  }, [columns]);
+  // const columnIds = React.useMemo(() => {
+  //   return new Set(
+  //     columns.map((column) => column.id).filter(Boolean) as string[],
+  //   );
+  // }, [columns]);
 
-  const [sorting, setSorting] = useQueryState(
-    SORT_KEY,
-    getSortingStateParser<TData>(columnIds)
-      .withOptions(queryStateOptions)
-      .withDefault(initialState?.sorting ?? []),
-  );
+  // const [sorting, setSorting] = useQueryState(
+  //   SORT_KEY,
+  //   getSortingStateParser<TData>(columnIds)
+  //     .withOptions(queryStateOptions)
+  //     .withDefault(initialState?.sorting ?? []),
+  // );
 
-  const onSortingChange = React.useCallback(
-    (updaterOrValue: Updater<SortingState>) => {
-      if (typeof updaterOrValue === 'function') {
-        const newSorting = updaterOrValue(sorting);
-        setSorting(newSorting as ExtendedColumnSort<TData>[]);
-      } else {
-        setSorting(updaterOrValue as ExtendedColumnSort<TData>[]);
-      }
-    },
-    [sorting, setSorting],
-  );
+  // const onSortingChange = React.useCallback(
+  //   (updaterOrValue: Updater<SortingState>) => {
+  //     if (typeof updaterOrValue === 'function') {
+  //       const newSorting = updaterOrValue(sorting);
+  //       setSorting(newSorting as ExtendedColumnSort<TData>[]);
+  //     } else {
+  //       setSorting(updaterOrValue as ExtendedColumnSort<TData>[]);
+  //     }
+  //   },
+  //   [sorting, setSorting],
+  // );
 
   const filterableColumns = React.useMemo(() => {
     if (enableAdvancedFilter) return [];
