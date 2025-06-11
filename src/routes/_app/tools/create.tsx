@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Main, MainHeader } from '@/components/layout/main';
-import ToolForm from '@/components/shared/forms/tool-form';
+import { ToolForm } from '@/components/shared';
 
 export const Route = createFileRoute('/_app/tools/create')({
   component: RouteComponent,

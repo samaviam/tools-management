@@ -4,23 +4,14 @@ import { Button } from '@/components/ui/button';
 import { IconPlus } from '@tabler/icons-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { GroupsTable } from '@/components/shared';
+import { useGetGroups } from '@/queries/groups';
 
 export const Route = createFileRoute('/_app/groups/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const data = [
-    {
-      id: 1,
-      class_id: 1,
-      name: 'Group name',
-      members: '3',
-      experiments: '10',
-      created_at: '',
-      updated_at: '',
-    },
-  ];
+  const { data } = useGetGroups();
 
   return (
     <Main>

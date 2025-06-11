@@ -4,14 +4,14 @@ import { Main, MainHeader } from '@/components/layout/main';
 import { Card, CardContent } from '@/components/ui/card';
 import { ClassesTable } from '@/components/shared';
 import { Button } from '@/components/ui/button';
+import { useGetClasses } from '@/queries/classes';
 
 export const Route = createFileRoute('/_app/classes/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  // const { data } = useGetClasses();
-  const data = [{ id: 1, name: 'Class Name', groups: 10, students: 20 }];
+  const { data } = useGetClasses();
 
   return (
     <Main>

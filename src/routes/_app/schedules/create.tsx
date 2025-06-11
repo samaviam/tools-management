@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Main, MainHeader } from '@/components/layout/main';
-import { StudentForm } from '@/components/shared';
+import { ScheduleForm } from '@/components/shared';
 
-export const Route = createFileRoute('/_app/students/create')({
+export const Route = createFileRoute('/_app/schedules/create')({
   component: RouteComponent,
 });
 
@@ -11,11 +11,11 @@ function RouteComponent() {
     <Main>
       <MainHeader>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">New Student</h2>
+          <h2 className="text-2xl font-bold tracking-tight">New Schedule</h2>
         </div>
       </MainHeader>
 
-      <StudentForm title="Create new Student" />
+      <ScheduleForm title="Create new Schedule" manually />
     </Main>
   );
 }

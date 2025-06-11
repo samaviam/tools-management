@@ -1,18 +1,18 @@
-import { createFileRoute, Link, useParams } from '@tanstack/react-router';
-import { Main, MainHeader } from '@/components/layout/main';
 import { useEffect } from 'react';
-import { useTool } from '@/queries/tools';
-import { Button } from '@/components/ui/button';
+import { createFileRoute, Link, useParams } from '@tanstack/react-router';
 import { Eye } from 'lucide-react';
-import { ToolForm } from '@/components/shared';
+import { Main, MainHeader } from '@/components/layout/main';
+import { Button } from '@/components/ui/button';
+import { useGroup } from '@/queries/groups';
+import { GroupForm } from '@/components/shared';
 
-export const Route = createFileRoute('/_app/tools/$id/edit')({
+export const Route = createFileRoute('/_app/groups/$id/edit')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data, mutate } = useTool();
-  const { id } = useParams({ from: '/_app/tools/$id/edit' });
+  const { data, mutate } = useGroup();
+  const { id } = useParams({ from: '/_app/groups/$id/edit' });
 
   useEffect(() => {
     mutate({ id: Number(id) });
@@ -22,19 +22,19 @@ function RouteComponent() {
     <Main>
       <MainHeader>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Edit Tool</h2>
+          <h2 className="text-2xl font-bold tracking-tight">Edit Group</h2>
         </div>
 
         <div className="flex gap-x-2">
           <Button asChild>
-            <Link to="/tools/$id" params={{ id }}>
+            <Link to="/groups/$id" params={{ id }}>
               View <Eye />
             </Link>
           </Button>
         </div>
       </MainHeader>
 
-      {data ? <ToolForm title="Edit the Tool" values={data} /> : null}
+      {data ? <GroupForm title="Edit the Group" values={data} /> : null}
     </Main>
   );
 }

@@ -5,23 +5,25 @@ import { StudentsTable } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { IconPlus } from '@tabler/icons-react';
+import { useGetStudents } from '@/queries/students';
+import db from '@/db';
+import { classes, groups } from '@/db/schema';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Info } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/students/')({
+  loader: async () => {
+    return {
+      classes_count: await db.$count(classes),
+      groups_count: await db.$count(groups),
+    };
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const data = [
-    {
-      id: '1',
-      class_id: '2',
-      name: 'اذريان - عليرضا',
-      national_id: '0926766661',
-      student_id: '01211055317003',
-      created_at: '2023-01-01',
-      updated_at: '2023-01-01',
-    },
-  ];
+  const { classes_count, groups_count } = Route.useLoaderData();
+  const { data } = useGetStudents();
 
   return (
     <Main>
@@ -39,6 +41,32 @@ function RouteComponent() {
           </Button>
         </div>
       </MainHeader>
+
+      {!classes_count ? (
+        <Alert className="mb-2">
+          <Info />
+          <AlertTitle>Recommended</AlertTitle>
+          <AlertDescription>
+            <div>
+              There are currently no <b>classes</b>. It is best to create a{' '}
+              <b>class</b> before creating a student.
+            </div>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+
+      {!groups_count ? (
+        <Alert className="mb-2">
+          <Info />
+          <AlertTitle>Recommended</AlertTitle>
+          <AlertDescription>
+            <div>
+              There are currently no <b>groups</b>. It is best to create a{' '}
+              <b>group</b> before creating a student.
+            </div>
+          </AlertDescription>
+        </Alert>
+      ) : null}
 
       <Card>
         <CardContent>

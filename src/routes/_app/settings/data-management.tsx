@@ -1,9 +1,9 @@
 import { z } from 'zod';
+import Papa from 'papaparse';
 import { Download, Upload } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import { writeTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { Main } from '@/components/layout/main';
 import {
   Card,
@@ -29,8 +29,10 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
+import db from '@/db';
+import { tools } from '@/db/schema';
+import type { Tool } from '@/types';
 
 const TYPES = [
   { value: 'tools', label: 'Tools' },
@@ -59,24 +61,23 @@ const ImportForm = () => {
   });
 
   const onImportSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const fileContent = e.target?.result as string;
-
-      await writeTextFile('tools.csv', fileContent, {
-        baseDir: BaseDirectory.AppLocalData,
-      });
-
-      const result = await invoke<string>('import_tools_from_csv');
-
-      toast.success(result);
-    };
-    reader.onerror = () => {
-      toast.error('Error reading file');
-    };
-
-    reader.readAsText(values.file);
+    Papa.parse<Tool.Item.Type>(values.file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: async (results) => {
+        if (values.type === 'tools') {
+          await db
+            .insert(tools)
+            .values(results.data)
+            .then(() => {
+              toast.success('Tools imported successfully');
+            })
+            .catch(() => {
+              toast.error('Tools does not import!');
+            });
+        }
+      },
+    });
   };
 
   return (
@@ -158,7 +159,8 @@ const ImportForm = () => {
 const ExportForm = () => {
   const form = useForm();
 
-  const onExportSubmit = (data) => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const onExportSubmit = (data: any) => {
     console.log(data);
   };
 

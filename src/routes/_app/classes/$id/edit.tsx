@@ -1,16 +1,32 @@
+import { useEffect } from 'react';
 import { createFileRoute, Link, useParams } from '@tanstack/react-router';
 import { IconSchool, IconUsersGroup } from '@tabler/icons-react';
 import { Eye } from 'lucide-react';
 import { Main, MainHeader } from '@/components/layout/main';
-import ClassForm from '@/components/shared/forms/class-form';
 import { Button } from '@/components/ui/button';
+import { useClass } from '@/queries/classes';
+import { ClassForm } from '@/components/shared';
+import { getFiltersStateParser } from '@/libs/parsers';
+import { createSerializer } from 'nuqs';
+import { url } from '@/libs/utils';
+
+const searchParams = {
+  filters: getFiltersStateParser(),
+};
+
+const serialize = createSerializer(searchParams);
 
 export const Route = createFileRoute('/_app/classes/$id/edit')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { data, mutate } = useClass();
   const { id } = useParams({ from: '/_app/classes/$id/edit' });
+
+  useEffect(() => {
+    mutate({ id: Number(id) });
+  }, []);
 
   return (
     <Main>
@@ -21,13 +37,23 @@ function RouteComponent() {
 
         <div className="flex gap-x-2">
           <Button variant="outline" asChild>
-            <Link to="/groups">
+            <Link
+              to={url(serialize, '/groups', {
+                id: 'class_id',
+                value: id,
+              })}
+            >
               Groups <IconUsersGroup />
             </Link>
           </Button>
 
           <Button variant="outline" asChild>
-            <Link to="/students">
+            <Link
+              to={url(serialize, '/students', {
+                id: 'class_id',
+                value: id,
+              })}
+            >
               Students <IconSchool />
             </Link>
           </Button>
@@ -40,7 +66,7 @@ function RouteComponent() {
         </div>
       </MainHeader>
 
-      <ClassForm title="Edit the Class" />
+      {data ? <ClassForm title="Edit the Class" values={data} /> : null}
     </Main>
   );
 }

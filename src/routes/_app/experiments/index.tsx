@@ -4,22 +4,14 @@ import { Button } from '@/components/ui/button';
 import { IconPlus } from '@tabler/icons-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ExperimentsTable } from '@/components/shared';
+import { useGetExperiments } from '@/queries/experiments';
 
 export const Route = createFileRoute('/_app/experiments/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const data = [
-    {
-      id: 1,
-      name: 'Experiment',
-      tools: 3,
-      status: 2,
-      created_at: '',
-      updated_at: '',
-    },
-  ];
+  const { data } = useGetExperiments();
 
   return (
     <Main>
