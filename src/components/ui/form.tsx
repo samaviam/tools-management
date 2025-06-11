@@ -48,7 +48,10 @@ const FormFieldRepeater = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >(
-  props: ControllerProps<TFieldValues, TName> & { legend: string },
+  props: ControllerProps<TFieldValues, TName> & {
+    legend: string;
+    className?: string;
+  },
 ) => {
   const repeater = useFieldArray({
     name: props.name as ArrayPath<TFieldValues>,
@@ -57,16 +60,26 @@ const FormFieldRepeater = <
 
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
-      <fieldset className="border rounded-lg p-4">
+      <fieldset className={cn('border rounded-lg p-4', props.className)}>
         <legend className="text-xs text-muted-foreground px-2">
           {props.legend}
         </legend>
 
-        {repeater.fields.map((field, index) => (
-          <div key={field.id} className="flex gap-x-2">
-            <Controller {...props} name={`${props.name}.${index}` as TName} />
+        {repeater.fields.map(({ id, ...values }, index) => (
+          <div key={id} className="flex gap-x-2">
+            <Controller
+              {...props}
+              name={`${props.name}.${index}` as TName}
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+              defaultValue={values as any}
+            />
             {repeater.fields.length > 1 ? (
-              <Button onClick={() => repeater.remove(index)}>Delete</Button>
+              <Button
+                disabled={props.disabled}
+                onClick={() => repeater.remove(index)}
+              >
+                Delete
+              </Button>
             ) : null}
           </div>
         ))}
@@ -74,6 +87,7 @@ const FormFieldRepeater = <
           type="button"
           size="icon"
           className="flex mx-auto"
+          disabled={props.disabled}
           onClick={() => {
             // biome-ignore lint/suspicious/noExplicitAny: <explanation>
             repeater.append(null as any);

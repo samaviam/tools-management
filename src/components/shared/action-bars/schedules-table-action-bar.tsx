@@ -26,13 +26,13 @@ const actions = [
 
 type Action = (typeof actions)[number];
 
-interface ExperimentsTableActionBarProps<TData> {
+interface SchedulesTableActionBarProps<TData> {
   table: Table<TData>;
 }
 
-export function ExperimentsTableActionBar<TData extends RowData>({
+export function SchedulesTableActionBar<TData extends RowData>({
   table,
-}: ExperimentsTableActionBarProps<TData>) {
+}: SchedulesTableActionBarProps<TData>) {
   const rows = table.getFilteredSelectedRowModel().rows;
   const [isPending] = React.useTransition();
   const [currentAction] = React.useState<Action | null>(null);

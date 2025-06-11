@@ -1,15 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { Eye, Pencil, Text, View } from 'lucide-react';
-import DataTable from '../../ui/data-table';
+import DataTable from '@/components/ui/data-table';
 import { TableColumns } from '@/components/table-columns';
-import { DataTableColumnHeader } from '../../data-table/data-table-column-header';
-import { DataTableSkeleton } from '../../data-table/data-table-skeleton';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
+import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton';
+import type { Student } from '@/types';
+import { Badge } from '@/components/ui/badge';
 
-type Tool = {
-  id: string;
-};
-
-const columns = TableColumns<Tool>(
+const columns = TableColumns<Student.WithRelations.Type>(
   [
     {
       id: 'id',
@@ -20,9 +18,55 @@ const columns = TableColumns<Tool>(
       ),
       cell: (info) => info.getValue(),
       enableHiding: false,
+      size: 65,
       meta: {
         label: 'ID',
         placeholder: 'Search IDs...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
+    {
+      id: 'class_id',
+      accessorKey: 'class_id',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Class" />
+      ),
+      cell: (info) => (
+        <Link
+          to="/classes/$id"
+          params={{ id: info.row.original.class.id.toString() }}
+        >
+          <Badge>{info.row.original.class.title}</Badge>
+        </Link>
+      ),
+      meta: {
+        label: 'Class ID',
+        placeholder: 'Search Class ID...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
+    {
+      id: 'group_id',
+      accessorKey: 'group_id',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Group" />
+      ),
+      cell: (info) =>
+        info.row.original.group ? (
+          <Link
+            to="/groups/$id"
+            params={{ id: info.row.original.group.id.toString() }}
+          >
+            <Badge>{info.row.original.group.name}</Badge>
+          </Link>
+        ) : null,
+      meta: {
+        label: 'Group ID',
+        placeholder: 'Search Group ID...',
         variant: 'text',
         icon: Text,
       },
@@ -73,40 +117,25 @@ const columns = TableColumns<Tool>(
         icon: Text,
       },
     },
-    {
-      id: 'class_id',
-      accessorKey: 'class_id',
-      enableColumnFilter: true,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Class ID" />
-      ),
-      cell: (info) => info.getValue(),
-      meta: {
-        label: 'Class ID',
-        placeholder: 'Search Class ID...',
-        variant: 'text',
-        icon: Text,
-      },
-    },
   ],
   (info) => [
     <Link
-      key="/tools/$id"
-      to="/tools/$id"
+      key="/students/$id"
+      to="/students/$id"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <Eye />
     </Link>,
     <Link
-      key="/tools/$id"
-      to="/tools/$id"
+      key="/students/$id"
+      to="/students/$id"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <View /> View
     </Link>,
     <Link
-      key="/tools/$id/edit"
-      to="/tools/$id/edit"
+      key="/students/$id/edit"
+      to="/students/$id/edit"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <Pencil /> Edit
@@ -114,8 +143,8 @@ const columns = TableColumns<Tool>(
   ],
 );
 
-const StudentsTable = ({ data }: { data?: any[] }) => {
-  return data?.length ? (
+const StudentsTable = ({ data }: { data?: Student.WithRelations.List }) => {
+  return data && data.length >= 0 ? (
     <DataTable
       columns={columns}
       data={data}

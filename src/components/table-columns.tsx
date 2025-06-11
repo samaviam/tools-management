@@ -16,6 +16,7 @@ import {
 export const TableColumns = <TData extends RowData, TValue = unknown>(
   columns: ColumnDef<TData, TValue>[],
   links: (info: CellContext<TData, TValue>) => React.ReactNode[],
+  indexName = 'name',
 ): ColumnDef<TData, TValue>[] => {
   return [
     {
@@ -110,12 +111,13 @@ export const TableColumns = <TData extends RowData, TValue = unknown>(
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
-                  {info.row.getValue('name')}
+                  {info.row.getValue(indexName)}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {links(info)
                   .splice(1)
                   .map((link, i) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <DropdownMenuItem key={i} asChild>
                       {link}
                     </DropdownMenuItem>

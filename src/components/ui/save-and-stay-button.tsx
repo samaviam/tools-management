@@ -1,16 +1,16 @@
 import { Save } from 'lucide-react';
 import { Button } from './button';
 
-export const SaveButton = (props: React.ComponentProps<'button'>) => {
+export const SaveAndStayButton = (props: React.ComponentProps<'button'>) => {
   return (
     <Button
-      variant="default"
+      variant="secondary"
       size="default"
       type="submit"
-      name="save"
+      name="save-and-stay"
       {...props}
     >
-      <Save /> Save
+      <Save /> Save and Stay
     </Button>
   );
 };

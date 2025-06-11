@@ -1,4 +1,5 @@
 import {
+  IconCalendarWeek,
   IconChalkboard,
   IconLayoutDashboard,
   IconMicroscope,
@@ -55,17 +56,12 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      title: 'Student Management',
+      title: 'Students Management',
       items: [
         {
           title: 'Classes',
           icon: IconChalkboard,
           url: '/classes',
-        },
-        {
-          title: 'Experiments',
-          icon: IconMicroscope,
-          url: '/experiments',
         },
         {
           title: 'Groups',
@@ -76,6 +72,21 @@ export const sidebarData: SidebarData = {
           title: 'Students',
           icon: IconSchool,
           url: '/students',
+        },
+      ],
+    },
+    {
+      title: 'Experiments Management',
+      items: [
+        {
+          title: 'Experiments',
+          icon: IconMicroscope,
+          url: '/experiments',
+        },
+        {
+          title: 'Schedules',
+          icon: IconCalendarWeek,
+          url: '/schedules',
         },
       ],
     },

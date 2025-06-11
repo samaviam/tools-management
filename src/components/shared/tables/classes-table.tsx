@@ -1,29 +1,19 @@
 import { Eye, Pencil, Text } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
-import { IconSchool, IconUsersGroup } from '@tabler/icons-react';
+import {
+  IconCalendarWeek,
+  IconSchool,
+  IconUsersGroup,
+} from '@tabler/icons-react';
 import { createSerializer } from 'nuqs';
-import DataTable from '../../ui/data-table';
-import { DataTableColumnHeader } from '../../data-table/data-table-column-header';
-import { DataTableSkeleton } from '../../data-table/data-table-skeleton';
-import type { UseClassesQuery } from '@/queries/classes/use-classes-query';
+import DataTable from '@/components/ui/data-table';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
+import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton';
 import { TableColumns } from '@/components/table-columns';
 import { getFiltersStateParser } from '@/libs/parsers';
 import { url } from '@/libs/utils';
-
-type Class = {
-  id: number;
-  serial_code: string;
-  name: string;
-  brand: string;
-  accuracy: string;
-  range: string;
-  serial_number: string;
-  property_code: string;
-  quantity: number;
-  description: string;
-  created_at: string;
-  updated_at: string;
-};
+import { Degree, type Class } from '@/types';
+import { Badge } from '@/components/ui/badge';
 
 const searchParams = {
   filters: getFiltersStateParser(),
@@ -31,7 +21,7 @@ const searchParams = {
 
 const serialize = createSerializer(searchParams);
 
-const columns = TableColumns<Class, UseClassesQuery.Class>(
+const columns = TableColumns<Class.WithRelations.Type>(
   [
     {
       id: 'id',
@@ -41,6 +31,7 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
         <DataTableColumnHeader column={column} title="ID" />
       ),
       cell: (info) => info.getValue(),
+      size: 65,
       meta: {
         label: 'ID',
         placeholder: 'Search IDs...',
@@ -49,16 +40,31 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
       },
     },
     {
-      id: 'name',
-      accessorKey: 'name',
+      id: 'title',
+      accessorKey: 'title',
       enableColumnFilter: true,
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Name" />
+        <DataTableColumnHeader column={column} title="Title" />
       ),
       cell: (info) => info.getValue(),
       meta: {
-        label: 'Name',
-        placeholder: 'Search Names...',
+        label: 'Title',
+        placeholder: 'Search Titles...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
+    {
+      id: 'degree',
+      accessorKey: 'degree',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Degree Level" />
+      ),
+      cell: (info) => <Badge>{Degree[info.getValue<number>()]}</Badge>,
+      meta: {
+        label: 'Degree Level',
+        placeholder: 'Search Degree Levels...',
         variant: 'text',
         icon: Text,
       },
@@ -70,13 +76,7 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Groups" />
       ),
-      cell: (info) => info.getValue(),
-      meta: {
-        label: 'Groups',
-        placeholder: 'Search Groups...',
-        variant: 'text',
-        icon: Text,
-      },
+      cell: (info) => info.row.original.groups.length,
     },
     {
       id: 'students',
@@ -85,13 +85,7 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Students" />
       ),
-      cell: (info) => info.getValue(),
-      meta: {
-        label: 'Students',
-        placeholder: 'Search Students...',
-        variant: 'text',
-        icon: Text,
-      },
+      cell: (info) => info.row.original.students.length,
     },
   ],
   (info) => [
@@ -120,7 +114,7 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
       key="/groups"
       to={url(serialize, '/groups', {
         id: 'class_id',
-        value: info.row.getValue('id'),
+        value: info.row.getValue('id')?.toString() ?? '',
       })}
     >
       <IconUsersGroup /> Groups
@@ -134,11 +128,21 @@ const columns = TableColumns<Class, UseClassesQuery.Class>(
     >
       <IconSchool /> Students
     </Link>,
+    <Link
+      key="/schedules"
+      to={url(serialize, '/schedules', {
+        id: 'class_id',
+        value: info.row.getValue('id')?.toString() ?? '',
+      })}
+    >
+      <IconCalendarWeek /> Schedules
+    </Link>,
   ],
+  'title',
 );
 
-const ClassesTable = ({ data }: { data?: UseClassesQuery.Class[] }) => {
-  return data?.length ? (
+const ClassesTable = ({ data }: { data?: Class.WithRelations.List }) => {
+  return data && data.length >= 0 ? (
     <DataTable
       columns={columns}
       data={data}

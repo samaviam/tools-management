@@ -1,28 +1,14 @@
 import { Link } from '@tanstack/react-router';
-import { Eye, Pencil, Text } from 'lucide-react';
+import { Check, Eye, Pencil, Text, X } from 'lucide-react';
 import DataTable from '@/components/ui/data-table';
-import { DataTableColumnHeader } from '../../data-table/data-table-column-header';
-import { DataTableSkeleton } from '../../data-table/data-table-skeleton';
-import type { UseExperimentsQuery } from '@/queries/experiments/use-experiments-query';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
+import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton';
 import { ExperimentsTableActionBar } from '../action-bars/experiments-table-action-bar';
 import { TableColumns } from '@/components/table-columns';
+import { Degree, type Experiment } from '@/types';
+import { Badge } from '@/components/ui/badge';
 
-type Experiment = {
-  id: number;
-  serial_code: string;
-  name: string;
-  brand: string;
-  accuracy: string;
-  range: string;
-  serial_number: string;
-  property_code: string;
-  quantity: number;
-  description: string;
-  created_at: string;
-  updated_at: string;
-};
-
-const columns = TableColumns<Experiment, UseExperimentsQuery.Experiment>(
+const columns = TableColumns<Experiment.Item.Type>(
   [
     {
       id: 'id',
@@ -33,6 +19,7 @@ const columns = TableColumns<Experiment, UseExperimentsQuery.Experiment>(
       ),
       cell: (info) => info.getValue(),
       enableHiding: false,
+      size: 65,
       meta: {
         label: 'ID',
         placeholder: 'Search IDs...',
@@ -57,16 +44,40 @@ const columns = TableColumns<Experiment, UseExperimentsQuery.Experiment>(
       },
     },
     {
-      id: 'tools',
-      accessorKey: 'tools',
+      id: 'degree',
+      accessorKey: 'degree',
       enableColumnFilter: true,
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tools" />
+        <DataTableColumnHeader column={column} title="Degree Level" />
       ),
-      cell: (info) => info.getValue(),
+      cell: (info) => <Badge>{Degree[info.getValue<number>()]}</Badge>,
       meta: {
-        label: 'Tools',
-        placeholder: 'Search Tools...',
+        label: 'Degree',
+        placeholder: 'Search Degree Levels...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
+    {
+      id: 'has_broken_tools',
+      accessorKey: 'has_broken_tools',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Has broken tools" />
+      ),
+      cell: (info) =>
+        info.getValue() ? (
+          <Badge className="[&>svg]:size-3 p-0.5 aspect-square rounded-2xl">
+            <Check />
+          </Badge>
+        ) : (
+          <Badge className="[&>svg]:size-3 p-0.5 aspect-square rounded-2xl">
+            <X />
+          </Badge>
+        ),
+      meta: {
+        label: 'Has Broken Tools',
+        placeholder: 'Search Has Broken Tools...',
         variant: 'text',
         icon: Text,
       },
@@ -78,7 +89,16 @@ const columns = TableColumns<Experiment, UseExperimentsQuery.Experiment>(
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Status" />
       ),
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        info.getValue() ? (
+          <Badge className="[&>svg]:size-3 p-0.5 aspect-square rounded-2xl">
+            <Check />
+          </Badge>
+        ) : (
+          <Badge className="[&>svg]:size-3 p-0.5 aspect-square rounded-2xl">
+            <X />
+          </Badge>
+        ),
       meta: {
         label: 'Status',
         placeholder: 'Search Status...',
@@ -112,10 +132,8 @@ const columns = TableColumns<Experiment, UseExperimentsQuery.Experiment>(
   ],
 );
 
-const ExperimentsTable = ({
-  data,
-}: { data?: UseExperimentsQuery.Experiment[] }) => {
-  return data?.length ? (
+const ExperimentsTable = ({ data }: { data?: Experiment.List }) => {
+  return data && data.length >= 0 ? (
     <DataTable
       columns={columns}
       data={data}

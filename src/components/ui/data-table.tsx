@@ -4,7 +4,7 @@ import {
   type InitialTableState,
   type Table,
 } from '@tanstack/react-table';
-import { match, P } from 'ts-pattern';
+import { match } from 'ts-pattern';
 import { useDataTable } from '@/hooks/use-data-table';
 import { DataTable } from '../data-table/data-table';
 import { DataTableSortList } from '../data-table/data-table-sort-list';

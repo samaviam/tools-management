@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import {
   Card,
   CardContent,
@@ -18,31 +17,61 @@ import {
 import { Input } from '@/components/ui/input';
 import { SaveButton } from '@/components/ui/save-button';
 import { Textarea } from '@/components/ui/textarea';
-import type { UseToolsQuery } from '@/queries/tools/use-tools-query';
-
-const formSchema = z.object({
-  name: z.string(),
-  serial_code: z.string(),
-  brand: z.string(),
-  accuracy: z.string(),
-  range: z.string(),
-  serial_number: z.string(),
-  property_code: z.string(),
-  quantity: z.string(),
-  description: z.string(),
-});
+import { Tool } from '@/types';
+import db from '@/db';
+import { tools } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import { toast } from 'sonner';
+import { useNavigate } from '@tanstack/react-router';
 
 const ToolForm = ({
   title,
   values,
   disabled = false,
-}: { title: string; values?: UseToolsQuery.Tool; disabled?: boolean }) => {
+}: { title: string; values?: Tool.Item.Type; disabled?: boolean }) => {
+  const navigate = useNavigate();
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(
+      Tool.Item.zod.omit({
+        id: true,
+        created_at: true,
+        updated_at: true,
+        deleted_at: true,
+      }),
+    ),
   });
 
-  const handleSubmit = (_values: z.infer<typeof formSchema>) => {
-    console.log(_values);
+  const handleSubmit = async (
+    _values: Omit<
+      Tool.Item.Type,
+      'id' | 'created_at' | 'updated_at' | 'deleted_at'
+    >,
+  ) => {
+    if (values) {
+      // UPDATE
+      await db
+        .update(tools)
+        .set(_values)
+        .where(eq(tools.id, values.id))
+        .then(() => {
+          toast.success('The tool was edited successfully.');
+        })
+        .catch(() => {
+          toast.error('The tool could not be edited!');
+        });
+    } else {
+      await db
+        .insert(tools)
+        .values(_values)
+        .then(() => {
+          toast.success('The tool was created successfully.');
+
+          navigate({ to: '/tools' });
+        })
+        .catch(() => {
+          toast.error('The new tool was not created!');
+        });
+    }
   };
 
   return (
@@ -98,7 +127,11 @@ const ToolForm = ({
                   <FormLabel>Brand</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Brand" {...field} />
+                    <Input
+                      placeholder="Brand"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -116,7 +149,11 @@ const ToolForm = ({
                   <FormLabel>Accuracy</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Accuracy" {...field} />
+                    <Input
+                      placeholder="Accuracy"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -134,7 +171,11 @@ const ToolForm = ({
                   <FormLabel>Range</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Range" {...field} />
+                    <Input
+                      placeholder="Range"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -152,7 +193,11 @@ const ToolForm = ({
                   <FormLabel>Serial Number</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Serial Number" {...field} />
+                    <Input
+                      placeholder="Serial Number"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -170,7 +215,11 @@ const ToolForm = ({
                   <FormLabel>Property Code</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Property Code" {...field} />
+                    <Input
+                      placeholder="Property Code"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -181,7 +230,7 @@ const ToolForm = ({
             <FormField
               name="quantity"
               disabled={disabled}
-              defaultValue={(values?.quantity ?? 0).toString()}
+              defaultValue={values?.quantity ?? 0}
               control={form.control}
               render={({ field }) => (
                 <FormItem className="grid-cols-[300px_1fr] mb-4">
@@ -206,7 +255,11 @@ const ToolForm = ({
                   <FormLabel>Description</FormLabel>
 
                   <FormControl>
-                    <Textarea placeholder="Description" {...field} />
+                    <Textarea
+                      placeholder="Description"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />

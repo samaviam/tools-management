@@ -67,6 +67,7 @@ export function DataTable<TData>({
                       style={{
                         ...getCommonPinningStyles({ column: cell.column }),
                       }}
+                      className={cell.column.columnDef.meta?.cellClassName}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

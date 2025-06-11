@@ -3,12 +3,13 @@ import { Link } from '@tanstack/react-router';
 import DataTable from '@/components/ui/data-table';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
 import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton';
-import { GroupsTableActionBar } from '../action-bars/groups-table-action-bar';
 import { TableColumns } from '@/components/table-columns';
-import type { Group } from '@/types';
+import { Schedule } from '@/types';
 import { Badge } from '@/components/ui/badge';
+import { SchedulesTableActionBar } from '../action-bars/schedules-table-action-bar';
+import { formatDate } from '@/libs/format';
 
-const columns = TableColumns<Group.WithRelations.Type>(
+const columns = TableColumns<Schedule.WithRelations.Type>(
   [
     {
       id: 'id',
@@ -28,17 +29,23 @@ const columns = TableColumns<Group.WithRelations.Type>(
       },
     },
     {
-      id: 'name',
-      accessorKey: 'name',
+      id: 'experiment_id',
+      accessorKey: 'experiment_id',
       enableColumnFilter: true,
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Name" />
+        <DataTableColumnHeader column={column} title="Experiment" />
       ),
-      cell: (info) => info.getValue(),
-      enableHiding: false,
+      cell: (info) => (
+        <Link
+          to="/experiments/$id"
+          params={{ id: info.row.original.experiment.id.toString() }}
+        >
+          <Badge>{info.row.original.experiment.name}</Badge>
+        </Link>
+      ),
       meta: {
-        label: 'Name',
-        placeholder: 'Search Names...',
+        label: 'Experiment ID',
+        placeholder: 'Search Experiment ID...',
         variant: 'text',
         icon: Text,
       },
@@ -66,58 +73,86 @@ const columns = TableColumns<Group.WithRelations.Type>(
       },
     },
     {
-      id: 'members',
-      accessorKey: 'members',
+      id: 'group_id',
+      accessorKey: 'group_id',
       enableColumnFilter: true,
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Members" />
+        <DataTableColumnHeader column={column} title="Group" />
       ),
-      cell: (info) =>
-        info.row.original.students.map((student) => (
-          <Link
-            key={student.id}
-            to="/students/$id"
-            params={{ id: student.id.toString() }}
-          >
-            <Badge>{student.name}</Badge>
-          </Link>
-        )),
+      cell: (info) => (
+        <Link
+          to="/groups/$id"
+          params={{ id: info.row.original.group.id.toString() }}
+        >
+          <Badge>{info.row.original.group.name}</Badge>
+        </Link>
+      ),
       meta: {
-        label: 'Members',
-        placeholder: 'Search Members...',
+        label: 'Group ID',
+        placeholder: 'Search Group ID...',
         variant: 'text',
         icon: Text,
-        cellClassName:
-          'flex items-center justify-center flex-wrap gap-1 max-w-40',
+      },
+    },
+    {
+      id: 'status',
+      accessorKey: 'status',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Status" />
+      ),
+      cell: (info) => <Badge>{Schedule.Status[info.getValue<number>()]}</Badge>,
+      meta: {
+        label: 'Status',
+        placeholder: 'Search Status...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
+    {
+      id: 'start_at',
+      accessorKey: 'start_at',
+      header: 'Start At',
+      cell: (info) =>
+        formatDate(info.getValue()?.toString(), {
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
+      meta: {
+        label: 'Start At',
+        placeholder: 'Search Start At...',
+        variant: 'text',
+        icon: Text,
       },
     },
   ],
   (info) => [
     <Link
-      key="/groups/$id"
-      to="/groups/$id"
+      key="/schedules/$id"
+      to="/schedules/$id"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <Eye />
     </Link>,
     <Link
-      key="/groups/$id"
-      to="/groups/$id"
+      key="/schedules/$id"
+      to="/schedules/$id"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <Eye /> View
     </Link>,
     <Link
-      key="/groups/$id/edit"
-      to="/groups/$id/edit"
+      key="/schedules/$id/edit"
+      to="/schedules/$id/edit"
       params={{ id: info.row.getValue('id') || '' }}
     >
       <Pencil /> Edit
     </Link>,
   ],
+  'id',
 );
 
-const GroupsTable = ({ data }: { data?: Group.WithRelations.List }) => {
+const SchedulesTable = ({ data }: { data?: Schedule.WithRelations.List }) => {
   return data && data.length >= 0 ? (
     <DataTable
       columns={columns}
@@ -128,11 +163,11 @@ const GroupsTable = ({ data }: { data?: Group.WithRelations.List }) => {
           updated_at: false,
         },
       }}
-      actionBar={(table) => <GroupsTableActionBar table={table} />}
+      actionBar={(table) => <SchedulesTableActionBar table={table} />}
     />
   ) : (
     <DataTableSkeleton columnCount={columns.length} />
   );
 };
 
-export default GroupsTable;
+export default SchedulesTable;

@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { eq } from 'drizzle-orm';
 import { toast } from 'sonner';
@@ -19,9 +18,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { SaveButton } from '@/components/ui/save-button';
+import { type Class, Group } from '@/types';
 import db from '@/db';
-import { classes } from '@/db/schema';
-import { Class, Degree } from '@/types';
+import { groups } from '@/db/schema';
 import {
   Select,
   SelectContent,
@@ -29,45 +28,62 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useEffect, useState } from 'react';
+import { UseClassesQuery } from '@/queries/classes/use-classes-query';
+import { useNavigate } from '@tanstack/react-router';
 
-const ClassForm = ({
+const GroupForm = ({
   title,
   values,
   disabled = false,
-}: { title: string; values?: Class.Item.Type; disabled?: boolean }) => {
+}: { title: string; values?: Group.Item.Type; disabled?: boolean }) => {
   const navigate = useNavigate();
+  const [classes, addClasses] = useState<Class.List>([]);
+
+  useEffect(() => {
+    (async () => {
+      const _classes = await UseClassesQuery.fn();
+
+      addClasses(_classes);
+    })();
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(
-      Class.Item.zod.omit({ id: true, created_at: true, updated_at: true }),
+      Group.Item.zod.omit({
+        id: true,
+        created_at: true,
+        updated_at: true,
+      }),
     ),
   });
 
   const handleSubmit = async (
-    _values: Omit<Class.Item.Type, 'id' | 'created_at' | 'updated_at'>,
+    _values: Omit<Group.Item.Type, 'id' | 'created_at' | 'updated_at'>,
   ) => {
     if (values) {
       // UPDATE
       await db
-        .update(classes)
+        .update(groups)
         .set(_values)
-        .where(eq(classes.id, values.id))
+        .where(eq(groups.id, values.id))
         .then(() => {
-          toast.success('The class was edited successfully.');
+          toast.success('The group was edited successfully.');
         })
         .catch(() => {
-          toast.error('The class could not be edited!');
+          toast.error('The group could not be edited!');
         });
     } else {
       await db
-        .insert(classes)
+        .insert(groups)
         .values(_values)
         .then(() => {
-          toast.success('The class was created successfully.');
+          toast.success('The group was created successfully.');
 
-          navigate({ to: '/classes' });
+          navigate({ to: '/groups' });
         })
         .catch(() => {
-          toast.error('The new class was not created!');
+          toast.error('The new group was not created!');
         });
     }
   };
@@ -80,16 +96,16 @@ const ClassForm = ({
 
           <CardContent className="py-6">
             <FormField
-              name="title"
+              name="name"
               disabled={disabled}
-              defaultValue={values?.title ?? ''}
+              defaultValue={values?.name ?? ''}
               control={form.control}
               render={({ field }) => (
                 <FormItem className="grid-cols-[300px_1fr] mb-4">
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>Name</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="Class name" {...field} />
+                    <Input placeholder="Group name" {...field} />
                   </FormControl>
 
                   <FormMessage className="col-start-2" />
@@ -98,33 +114,34 @@ const ClassForm = ({
             />
 
             <FormField
-              name="degree"
+              name="class_id"
               disabled={disabled}
-              defaultValue={values?.degree}
+              defaultValue={values?.class_id}
               control={form.control}
               render={({ field }) => (
                 <FormItem className="grid-cols-[300px_1fr] mb-4">
-                  <FormLabel>Degree</FormLabel>
+                  <FormLabel>Class</FormLabel>
+
                   <Select
-                    onValueChange={(value) =>
-                      field.onChange(Number.parseInt(value))
-                    }
+                    onValueChange={field.onChange}
                     defaultValue={field.value?.toString()}
                     disabled={field.disabled}
                   >
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select the class degree level" />
+                        <SelectValue placeholder="Select the class of student" />
                       </SelectTrigger>
                     </FormControl>
 
                     <SelectContent>
-                      <SelectItem value={Degree.associate.toString()}>
-                        Associate
-                      </SelectItem>
-                      <SelectItem value={Degree.bachelor.toString()}>
-                        Bachelor
-                      </SelectItem>
+                      {classes.map((_class) => (
+                        <SelectItem
+                          key={_class.id}
+                          value={_class.id.toString()}
+                        >
+                          {_class.title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
 
@@ -145,4 +162,4 @@ const ClassForm = ({
   );
 };
 
-export default ClassForm;
+export default GroupForm;

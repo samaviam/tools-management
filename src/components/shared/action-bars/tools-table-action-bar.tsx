@@ -1,7 +1,7 @@
 import type { RowData, Table } from '@tanstack/react-table';
-import { ArrowUp, CheckCircle2, Download, Trash2 } from 'lucide-react';
+import { ArrowUp, Download, FlaskConical, Trash2 } from 'lucide-react';
 import * as React from 'react';
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 
 import {
   DataTableActionBar,
@@ -18,7 +18,7 @@ import { Separator } from '@/components/ui/separator';
 import { SelectTrigger } from '@radix-ui/react-select';
 
 const actions = [
-  'update-status',
+  'add-to-experiment',
   'update-priority',
   'export',
   'delete',
@@ -34,8 +34,8 @@ export function ToolsTableActionBar<TData extends RowData>({
   table,
 }: ToolsTableActionBarProps<TData>) {
   const rows = table.getFilteredSelectedRowModel().rows;
-  const [isPending, startTransition] = React.useTransition();
-  const [currentAction, setCurrentAction] = React.useState<Action | null>(null);
+  const [isPending] = React.useTransition();
+  const [currentAction] = React.useState<Action | null>(null);
 
   const getIsActionPending = React.useCallback(
     (action: Action) => isPending && currentAction === action,
@@ -54,10 +54,10 @@ export function ToolsTableActionBar<TData extends RowData>({
           <SelectTrigger asChild>
             <DataTableActionBarAction
               size="icon"
-              tooltip="Update status"
-              isPending={getIsActionPending('update-status')}
+              tooltip="Add to Experiment"
+              isPending={getIsActionPending('add-to-experiment')}
             >
-              <CheckCircle2 />
+              <FlaskConical />
             </DataTableActionBarAction>
           </SelectTrigger>
           <SelectContent align="center">

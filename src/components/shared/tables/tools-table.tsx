@@ -1,28 +1,14 @@
 import { Eye, Pencil, Text } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import DataTable from '../../ui/data-table';
-import type { UseToolsQuery } from '@/queries/tools/use-tools-query';
 import { DataTableColumnHeader } from '../../data-table/data-table-column-header';
 import { DataTableSkeleton } from '../../data-table/data-table-skeleton';
 import { ToolsTableActionBar } from '../action-bars/tools-table-action-bar';
 import { TableColumns } from '@/components/table-columns';
+import { Tool } from '@/types';
+import { Badge } from '@/components/ui/badge';
 
-type Tool = {
-  id: number;
-  serial_code: string;
-  name: string;
-  brand: string;
-  accuracy: string;
-  range: string;
-  serial_number: string;
-  property_code: string;
-  quantity: number;
-  description: string;
-  created_at: string;
-  updated_at: string;
-};
-
-const columns = TableColumns<Tool, UseToolsQuery.Tool>(
+const columns = TableColumns<Tool.Item.Type>(
   [
     {
       id: 'id',
@@ -33,6 +19,7 @@ const columns = TableColumns<Tool, UseToolsQuery.Tool>(
       ),
       cell: (info) => info.getValue(),
       enableHiding: false,
+      size: 65,
       meta: {
         label: 'ID',
         placeholder: 'Search IDs...',
@@ -161,6 +148,21 @@ const columns = TableColumns<Tool, UseToolsQuery.Tool>(
         icon: Text,
       },
     },
+    {
+      id: 'status',
+      accessorKey: 'status',
+      enableColumnFilter: true,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Status" />
+      ),
+      cell: (info) => <Badge>{Tool.Status[info.getValue<number>()]}</Badge>,
+      meta: {
+        label: 'Status',
+        placeholder: 'Search Status...',
+        variant: 'text',
+        icon: Text,
+      },
+    },
   ],
   (info) => [
     <Link
@@ -187,8 +189,8 @@ const columns = TableColumns<Tool, UseToolsQuery.Tool>(
   ],
 );
 
-const ToolsTable = ({ data }: { data?: UseToolsQuery.Tool[] }) => {
-  return data?.length ? (
+const ToolsTable = ({ data }: { data?: Tool.List }) => {
+  return data && data.length >= 0 ? (
     <DataTable
       columns={columns}
       data={data}

@@ -18,14 +18,18 @@ export const Combobox = <T,>({
   value,
   items,
   options,
+  defaultValue,
   placeholder,
+  triggerClassName,
   onChange,
 }: {
   label: keyof T;
   value: keyof T;
   items: ReadonlyArray<T>;
   options?: IFuseOptions<T>;
+  defaultValue?: T;
   placeholder?: string;
+  triggerClassName?: string;
   onChange: (value: string) => void;
   children: (arg: {
     value: { label: string; value: string } | null;
@@ -35,7 +39,12 @@ export const Combobox = <T,>({
 }) => {
   const [open, setOpen] = useState(false);
   const [_value, setValue] = useState<{ label: string; value: string } | null>(
-    null,
+    defaultValue?.[label] && defaultValue[value]
+      ? {
+          label: defaultValue[label].toString(),
+          value: defaultValue[value].toString(),
+        }
+      : null,
   );
   const [search, filter] = useState('');
   const fuse = new Fuse(items, options);
@@ -53,7 +62,7 @@ export const Combobox = <T,>({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger className={triggerClassName} asChild>
         {children({ value: _value, search, open })}
       </PopoverTrigger>
 

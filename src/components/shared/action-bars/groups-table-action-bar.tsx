@@ -1,7 +1,7 @@
 import type { RowData, Table } from '@tanstack/react-table';
 import { ArrowUp, CheckCircle2, Download, Trash2 } from 'lucide-react';
 import * as React from 'react';
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 
 import {
   DataTableActionBar,
@@ -34,8 +34,8 @@ export function GroupsTableActionBar<TData extends RowData>({
   table,
 }: GroupsTableActionBarProps<TData>) {
   const rows = table.getFilteredSelectedRowModel().rows;
-  const [isPending, startTransition] = React.useTransition();
-  const [currentAction, setCurrentAction] = React.useState<Action | null>(null);
+  const [isPending] = React.useTransition();
+  const [currentAction] = React.useState<Action | null>(null);
 
   const getIsActionPending = React.useCallback(
     (action: Action) => isPending && currentAction === action,
