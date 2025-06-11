@@ -37,7 +37,8 @@ function setRef<T>(ref: PossibleRef<T>, value: T) {
   }
 
   if (ref !== null && ref !== undefined) {
-    ref.current = value;
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    (ref as { current: any }).current = value;
   }
 }
 
@@ -65,7 +66,7 @@ function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
         for (let i = 0; i < cleanups.length; i++) {
           const cleanup = cleanups[i];
           if (typeof cleanup === 'function') {
-            cleanup();
+            (cleanup as CallableFunction)();
           } else {
             setRef(refs[i], null);
           }
