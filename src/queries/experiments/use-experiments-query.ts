@@ -1,26 +1,28 @@
 import { useQuery } from '@tanstack/react-query';
-import { invoke } from '@tauri-apps/api/core';
+import db from '@/db';
+import { Experiment, Tool } from '@/types';
 
 export namespace UseExperimentsQuery {
-  export type Experiment = {
-    id: number;
-    serial_code: string;
-    name: string;
-    brand: string;
-    accuracy: string;
-    range: string;
-    serial_number: string;
-    property_code: string;
-    quantity: number;
-    description: string;
-    created_at: string;
-    updated_at: string;
-  };
-
   export const key = ['get-all-experiments'];
 
-  export const fn = async (): Promise<Experiment[]> => {
-    return await invoke<Experiment[]>('get_all_experiments');
+  export const fn = async (): Promise<Experiment.WithRelations.List> => {
+    let results = await db.query.experiments.findMany({
+      with: { experiments_to_tools: { columns: {}, with: { tool: true } } },
+    });
+
+    results = results.map((experiment) => {
+      const tools = experiment.experiments_to_tools.flatMap((t) => t.tool);
+
+      return {
+        ...experiment,
+        has_broken_tools: tools.some(
+          (tool) => tool.status === Tool.Status.Broken,
+        ),
+        tools,
+      };
+    });
+
+    return Experiment.WithRelations.zod.array().parse(results);
   };
 }
 

@@ -1,7 +1,11 @@
+import bcrypt from 'bcryptjs';
+import { eq } from 'drizzle-orm';
+import { invoke } from '@tauri-apps/api/core';
 import { type QueryClient, useMutation } from '@tanstack/react-query';
 import type { Register } from '@tanstack/react-router';
-import { invoke } from '@tauri-apps/api/core';
 import { UseUserQuery } from './use-user-query';
+import db from '@/db';
+import { users } from '@/db/schema';
 
 export namespace UseLoginMutation {
   export type Credentials = {
@@ -14,7 +18,17 @@ export namespace UseLoginMutation {
   export const fn = async ({
     credentials,
   }: { credentials: Credentials; redirect?: string }) => {
-    const token = await invoke<string>('login', credentials);
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, credentials.email))
+      .get();
+
+    if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
+      throw new Error('Invalid credentials');
+    }
+
+    const token = await invoke<string>('login', { userId: user.id });
 
     localStorage.setItem('token', token);
 
